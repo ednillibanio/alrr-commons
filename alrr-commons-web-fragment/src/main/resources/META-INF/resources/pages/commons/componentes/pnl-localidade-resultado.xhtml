@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:shiro="http://shiro.apache.org/tags"
+	xmlns:o="http://omnifaces.org/ui">
+
+
+	<!-- RESULTADO DA PESQUISA -->
+	<p:dataTable id="result" widgetVar="result"
+		value="#{localidadeController.dataModel}"
+		selection="#{localidadeController.entity}" var="localidade"
+		paginator="true" rows="15" rowsPerPageTemplate="9,15,30"
+		selectionMode="single" emptyMessage="Nenhum registro encontrado"
+		reflow="true" draggableColumns="true" paginatorPosition="top"
+		paginatorAlwaysVisible="true">
+
+		<!-- TITULO DATATABLE -->
+		<f:facet name="header">
+			<h:outputLabel value="Resultado" />
+		</f:facet>
+		<!-- CHAMA MENU - BOTAO DIREITO -->
+		<p:ajax event="contextMenu" update="result" />
+
+
+		<!-- NOME -->
+		<p:column id="nome" sortBy="#{localidade.nome}">
+			<f:facet name="header">
+				<h:outputText value="Nome" />
+			</f:facet>
+			<h:outputText value="#{localidade.nome}" />
+		</p:column> -->
+
+
+		<!-- UF -->
+		<p:column sortBy="#{localidade.ibgeId}" id="ibgeId"
+			headerText="Ibge Cód." width="10%">
+			<h:outputText value="#{localidade.ibgeId}" />
+		</p:column>
+
+
+		<!-- UF -->
+		<p:column sortBy="#{localidade.uf}" id="uf" headerText="Uf"
+			width="10%">
+			<h:outputText value="#{localidade.uf.name()}" />
+		</p:column>
+
+
+	</p:dataTable>
+
+
+	<!-- ContextMenu deve sempre vir depois do datable para funcionar a seleção pelo botão direito do mouse. -->
+	<p:contextMenu for="result">
+
+		<!-- ********* BOTAO EDITAR ********* -->
+		<shiro:hasPermission name="localidade:editar">
+			<p:menuitem value="#{core['btn.editar.value']}"
+				icon="#{core['btn.editar.icon']}" update="frm-localidade"
+				process="@this" action="#{localidadeController.editar()}">
+			</p:menuitem>
+		</shiro:hasPermission>
+
+		<p:menuitem value="#{core['btn.renovar.value']}"
+			icon="#{core['btn.renovar.icon']}" update="result"
+			action="#{localidadeController.renovarRegistroDataModel()}"
+			process="@this">
+		</p:menuitem>
+	</p:contextMenu>
+
+
+</ui:composition>

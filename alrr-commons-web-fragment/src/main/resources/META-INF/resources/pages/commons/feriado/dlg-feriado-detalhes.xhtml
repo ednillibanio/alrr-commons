@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:kmdr="http://java.sun.com/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui">
+
+
+
+	<p:dialog id="dlgFeriadoDetalhes" widgetVar="_dlgFeriadoDetalhes"
+		modal="true" resizable="false" closable="false" closeOnEscape="true"
+		showHeader="false" responsive="true" appendTo="@(body)"
+		style="width:100%">
+
+		<h:form id="frmFeriadoDetalhes">
+			<o:importConstants type="br.kmdr.util.domain.Mes" />
+			<o:importConstants type="br.kmdr.util.domain.FeriadoType" />
+
+			<div class="ui-fluid">
+				<p:panel header="#{bundle_com['feriado.dialog.header.detalhes']}"
+					id="pnl-detalhes">
+
+					<p:panelGrid id="grid-detalhes" columns="2" layout="grid"
+						columnClasses="label, value" styleClass="ui-panelgrid-blank"
+						rendered="#{not empty feriadoController.entity }">
+
+
+						<!-- TIPO FERIADO -->
+						<h:outputText value="#{bundle_com['feriado.label.tipo.feriado']}" />
+						<h:outputText value="#{feriadoController.entity.tipo}"
+							converter="omnifaces.GenericEnumConverter" id="etipo" />
+
+						<!-- NOME -->
+						<h:outputText value="#{bundle_com['feriado.label.nome']}" />
+						<h:outputText id="vnome" value="#{feriadoController.entity.nome}" />
+
+
+						<!-- DIA -->
+						<h:outputText value="#{bundle_com['feriado.label.dia']}" />
+						<h:outputText id="vdia" value="#{feriadoController.entity.dia}" />
+
+
+						<!-- MES -->
+						<p:outputLabel value="#{bundle_com['feriado.label.mes']}"
+							for="vmes" />
+						<h:outputText id="vmes" type="mes"
+							value="#{feriadoController.entity.mes}"
+							converter="omnifaces.GenericEnumConverter" />
+
+
+						<!-- LOCALIDADE -> TIPO FERIADO == MUNICIPAL -->
+						<p:outputLabel value="#{bundle_com['feriado.label.localidade']}"
+							for="vlocalidade"
+							rendered="#{feriadoController.entity.tipo eq 'MUNICIPAL'}" />
+						<h:outputText id="vlocalidade"
+							value="#{feriadoController.entity.localidade.nome} - #{feriadoController.entity.localidade.uf}"
+							rendered="#{feriadoController.entity.tipo eq 'MUNICIPAL'}" />
+
+
+						<!-- UF -> TIPO FERIADO == ESTADUAL -->
+						<p:outputLabel value="#{bundle_com['feriado.label.uf']}" for="vuf"
+							rendered="#{feriadoController.entity.tipo eq 'ESTADUAL'}" />
+						<h:outputText id="vuf" value="#{feriadoController.entity.uf}"
+							rendered="#{feriadoController.entity.tipo eq 'ESTADUAL'}" />
+
+					</p:panelGrid>
+
+
+					<f:facet name="footer">
+						<kmdr:botao-fechar oncomplete="PF('_dlgFeriadoDetalhes').hide();" />
+					</f:facet>
+				</p:panel>
+			</div>
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
+
+<p:dialog id="dlg-localidade" widgetVar="dlg-localidade"
+	showEffect="clip" hideEffect="clip" closeOnEscape="true"
+	showHeader="false" responsive="true" modal="true" resizable="false"
+	closable="false" appendTo="@(body)"
+	styleClass="ui-fluid ui-md-6 ui-lg-6 nopad" fitViewport="true">
+
+	<o:form id="frm-localidade">
+		<p:tooltip position="right" />
+		<p:growl id="msgs-localidade" />
+
+
+		<p:panel header="Localidade" id="pnl-localidade">
+
+
+			<p:panelGrid columns="1" cellpadding="10"
+				styleClass="ui-panelgrid-blank" layout="grid">
+
+				<!-- NOME -->
+				<h:panelGroup>
+					<p:outputLabel value="Nome" for="nome-localidade" />
+					<p:inputText id="nome-localidade" title="Nome do município"
+						label="Nome" required="true"
+						value="#{localidadeController.entity.nome}"
+						converter="#{capitalizeFullyConverter}">
+						<f:validateLength minimum="3" maximum="250" for="nome-localidade" />
+					</p:inputText>
+					<p:message for="nome-localidade" display="tooltip" />
+				</h:panelGroup>
+
+				<!-- LISTA UF -->
+				<h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel value="Uf" for="uf" />
+						<p:selectOneMenu id="uf" label="Uf"
+							value="#{localidadeController.entity.uf}" required="true">
+							<f:selectItem noSelectionOption="true" itemLabel="[Selecione]" />
+							<f:selectItems value="#{commonsEnumFactory.ufs}" var="uf"
+								itemValue="#{uf}" itemLabel="#{uf.label}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+				</h:panelGroup>
+			</p:panelGrid>
+
+			<!-- BOTOES -->
+			<f:facet name="footer">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+
+					<!--  B O T Ã O:  F E C H A R   -->
+					<p:commandButton id="btn-fechar"
+						value="#{core['btn.fechar.value']}"
+						title="#{core['btn.fechar.title']}"
+						icon="#{core['btn.fechar.icon']}"
+						styleClass="#{core['btn.fechar.styleClass']}"
+						oncomplete="PF('dlg-localidade').hide()" process="@this" />
+
+
+					<!--  B O T Ã O:  S A L V A R  -->
+					<p:commandButton id="btn-salvar"
+						value="#{core['btn.salvar.value']}"
+						title="#{core['btn.salvar.title']}"
+						icon="#{core['btn.salvar.icon']}"
+						styleClass="#{core['btn.salvar.styleClass']}"
+						update="frm-localidade msgs-localidade" process="frm-localidade"
+						action="#{localidadeController.salvar()}" validateClient="true" />
+				</p:panelGrid>
+			</f:facet>
+		</p:panel>
+	</o:form>
+</p:dialog>
+</html>

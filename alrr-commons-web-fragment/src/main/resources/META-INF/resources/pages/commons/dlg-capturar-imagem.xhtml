@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
+
+<p:dialog id="dlg-capturar-imagem" widgetVar="dlg-capturar-imagem"
+	showEffect="clip" hideEffect="clip" closeOnEscape="true"
+	showHeader="false" responsive="true" modal="true" resizable="false"
+	closable="false" appendTo="@(body)" styleClass="ui-fluid ui-md-6 nopad"
+	width="720px" fitViewport="true">
+
+	<h:form id="frm-imagem">
+		<p:tooltip />
+		<p:messages id="msgs" escape="false" closable="true" globalOnly="true" />
+		<p:panel header="Capturar Imagem" id="pnl-imagem"
+			styleClass="nopad-left nopad-right">
+
+
+			<p:panelGrid columns="2" columnClasses="ui-grid-col6, ui-grid-col-6"
+				styleClass="ui-panelgrid-blank ui-fluid ui-responsive" layout="grid">
+
+
+				<h:panelGroup>
+					<div class="ui-responsive ui-fluid">
+						<p:photoCam widgetVar="pc" id="pc"
+							listener="#{webCamController.onCapture}" update="pnl-foto"
+							jpegQuality="100" rendered="#{webCamController.webCamAtiva}"
+							width="320" />
+
+
+						<p:commandButton value="Capturar" title="Capturar Imagem"
+							styleClass="btn-lg" icon="fa fa-fw fa-camera"
+							onclick="PF('pc').capture();"
+							onsuccess="PF('dlg-capturar-imagem').initPosition(); return false;" />
+					</div>
+				</h:panelGroup>
+
+				<p:outputPanel id="pnl-foto">
+					<p:graphicImage value="#{webCamController.imagemStreamed}"
+						styleClass="foto-selecionada" stream="false" height="200"
+						width="300" rendered="#{webCamController.imagem != null}" />
+					<p:outputPanel rendered="#{!webCamController.webCamAtiva}">
+						<p:graphicImage id="webcam-vazia" stream="false"
+							url="http://placehold.it/320x240" />
+					</p:outputPanel>
+				</p:outputPanel>
+
+
+
+			</p:panelGrid>
+
+			<!-- BOTOES -->
+			<f:facet name="footer">
+
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+					<!-- CANCELAR -->
+					<p:commandButton value="Fechar" id="btn-fechar"
+						icon="fa fa-fw fa-times" title="Fechar" styleClass="btn-lg"
+						oncomplete="PF('dlg-capturar-imagem').hide()" process="@this" />
+
+					<!-- ENVIAR -->
+					<!-- antes estava frm-deputado em update-->
+					<p:commandButton value="Enviar" id="btn-enviar" title="Enviar"
+						icon="fa fa-fw fa-upload" styleClass="btn-lg"
+						validateClient="true" update="@(.imagem-capturada)"
+						actionListener="#{webCamController.enviarImagemCapturada}"
+						onsuccess="PF('dlg-capturar-imagem').hide()" />
+				</p:panelGrid>
+
+			</f:facet>
+		</p:panel>
+	</h:form>
+
+</p:dialog>
+</html>

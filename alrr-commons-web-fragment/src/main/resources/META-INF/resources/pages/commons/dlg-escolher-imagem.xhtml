@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
+
+<p:dialog id="dlg-escolher-imagem" widgetVar="dlg-escolher-imagem"
+	showEffect="clip" hideEffect="clip" closeOnEscape="true"
+	showHeader="false" responsive="true" modal="true" resizable="false"
+	closable="false" appendTo="@(body)"
+	styleClass="ui-fluid ui-md-6 nopad" fitViewport="true">
+
+	<h:form id="frm-escolher-imagem">
+		<p:messages id="msgs-escolher-imagem" escape="false" closable="true"
+			showDetail="false" showIcon="false" />
+
+		<p:panel header="Escolher Imagem" id="pnl-imagem"
+			styleClass="nopad-left nopad-right">
+
+			<p:fileUpload value="#{imagemUploadController.imagemEnviada}"
+				id="upload" auto="true"
+				update="upload pnl-imagem-selecionada msgs-escolher-imagem"
+				mode="advanced" sizeLimit="1048576"
+				allowTypes="/(\.|\/)(gif|jpe?g|png)$/" label="Escolher..."
+				multiple="false" fileLimit="1" accept="/(\.|\/)(gif|jpe?g|png)$/"
+				fileUploadListener="#{imagemUploadController.upload}"
+				previewWidth="90" skinSimple="true" />
+
+
+			<p:outputPanel id="pnl-imagem-selecionada">
+				<p:graphicImage value="#{imagemUploadController.imagemSelecionada}"
+					styleClass="foto-selecionada" height="200" width="300"
+					stream="false"
+					rendered="#{imagemUploadController.imagemConteudo != null}" />
+				<p:graphicImage value="#{imagemUploadController.imagemSelecionada}"
+					rendered="#{imagemUploadController.imagemConteudo == null}"
+					styleClass="foto-selecionada" url="http://placehold.it/200x300">
+				</p:graphicImage>
+
+			</p:outputPanel>
+
+			<!-- BOTOES -->
+			<f:facet name="footer">
+
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+					<!-- CANCELAR -->
+					<p:commandButton value="Fechar" id="btn-fechar-dlg-escolher"
+						icon="fa fa-fw fa-times" title="Fechar" styleClass="btn-lg"
+						oncomplete="PF('dlg-escolher-imagem').hide()" process="@this" />
+
+					<!-- ENVIAR -->
+					<p:commandButton value="Enviar" id="btn-enviar-imagem-selecionada"
+						title="Enviar" icon="fa fa-fw fa-upload" styleClass="btn-lg"
+						validateClient="true" update="@(form)"
+						onsuccess="PF('dlg-escolher-imagem').hide()"
+						actionListener="#{imagemUploadController.enviarImagemSelecionada}" />
+				</p:panelGrid>
+
+			</f:facet>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>
