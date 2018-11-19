@@ -1,0 +1,23 @@
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.jboss.org/ironjacamar/schema http://docs.jboss.org/ironjacamar/schema/datasources_1_0.xsd">
+	<datasource jta="true"
+		jndi-name="java:/jboss/datasources/commons-ds" pool-name="commons-ds"
+		enabled="true" use-ccm="false" use-java-context="true">
+		<connection-url>jdbc:postgresql://localhost/alrr-sistemas</connection-url>
+		<driver-class>org.postgresql.Driver</driver-class>
+		<driver>postgresql</driver>
+		<security>
+			<user-name>postgres</user-name>
+			<password>postgres</password>
+		</security>
+		<validation>
+			<valid-connection-checker
+				class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker" />
+			<check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+			<background-validation>true</background-validation>
+			<exception-sorter
+				class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter" />
+		</validation>
+	</datasource>
+</datasources>
