@@ -58,7 +58,7 @@ public class FeriadoConstraintValidator implements ConstraintValidator<ValidFeri
 				valido = false;
 			}
 
-			if (feriado.getLocalidade() != null) {
+			if (feriado.getMunicipio() != null) {
 				context.buildConstraintViolationWithTemplate(
 						"O valor do campo Municipio deve ser nulo para o tipo de feriado Nacional.")
 						.addConstraintViolation();
@@ -73,7 +73,7 @@ public class FeriadoConstraintValidator implements ConstraintValidator<ValidFeri
 				valido = false;
 			}
 
-			if (feriado.getLocalidade() != null) {
+			if (feriado.getMunicipio() != null) {
 				context.buildConstraintViolationWithTemplate(
 						"O valor do campo Municipio deve ser nulo para o tipo de feriado igual a Estadual.")
 						.addPropertyNode("municipio").addConstraintViolation();
@@ -82,7 +82,7 @@ public class FeriadoConstraintValidator implements ConstraintValidator<ValidFeri
 
 		} else if (feriado.getTipo().equals(FeriadoType.MUNICIPAL)) {
 
-			valido = (feriado.getLocalidade() != null);
+			valido = (feriado.getMunicipio() != null);
 
 			if (!valido) {
 				context.buildConstraintViolationWithTemplate("campo obrigatório.").addPropertyNode("municipio")

@@ -8,11 +8,11 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.leg.rr.al.commons.domain.UfType;
-import br.leg.rr.al.commons.ejb.MunicipioLocal;
-import br.leg.rr.al.commons.jpa.Municipio;
 import br.leg.rr.al.core.dao.BeanException;
 import br.leg.rr.al.core.web.util.FacesMessageUtils;
+import br.leg.rr.al.localidade.domain.UfType;
+import br.leg.rr.al.localidade.ejb.MunicipioLocal;
+import br.leg.rr.al.localidade.jpa.Municipio;
 
 @Named
 @RequestScoped

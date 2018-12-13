@@ -2,8 +2,8 @@ package br.leg.rr.al.commons.ejb;
 
 import javax.ejb.Local;
 
-import br.leg.rr.al.commons.jpa.Cep;
 import br.leg.rr.al.commons.jpa.Endereco;
+import br.leg.rr.al.localidade.jpa.Cep;
 
 /**
  * 

@@ -15,12 +15,13 @@ import javax.validation.constraints.NotNull;
 
 import br.leg.rr.al.commons.domain.FeriadoType;
 import br.leg.rr.al.commons.domain.FeriadoTypeConverter;
-import br.leg.rr.al.commons.domain.UfType;
 import br.leg.rr.al.commons.jpa.feriado.validators.ValidFeriado;
 import br.leg.rr.al.commons.jpa.validators.ValidDia;
 import br.leg.rr.al.core.domain.Mes;
 import br.leg.rr.al.core.domain.MesConverter;
 import br.leg.rr.al.core.jpa.Dominio;
+import br.leg.rr.al.localidade.domain.UfType;
+import br.leg.rr.al.localidade.jpa.Municipio;
 
 /**
  * Classe persistente que representa a tabela "feriado".
@@ -68,7 +69,7 @@ public class Feriado extends Dominio {
 	// @NotNull(groups = { FeriadoMunicipal.class, FeriadoEstadual.class }, message
 	// = "Municipio: campo obrigatório.")
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "localidade_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "localidade_fk"), nullable = true)
+	@JoinColumn(name = "municipio_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "municipio_fk"), nullable = true)
 	private Municipio municipio = null;
 
 	/**
@@ -115,18 +116,18 @@ public class Feriado extends Dominio {
 	 * @return municipio. Caso o tipo do feriado seja diferente de Municipal,
 	 *         retorna <code>null</code>.
 	 */
-	public Municipio getLocalidade() {
+	public Municipio getMunicipio() {
 		return municipio;
 	}
 
 	/**
-	 * Define a municipio do feriado. Preenchimento obrigatório se o tipo do
-	 * feriado for igual a Municipal.
+	 * Define a municipio do feriado. Preenchimento obrigatório se o tipo do feriado
+	 * for igual a Municipal.
 	 * 
 	 * @see Feriado#setTipo(FeriadoType)
 	 * @param municipio
 	 */
-	public void setLocalidade(Municipio municipio) {
+	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
 	}
 

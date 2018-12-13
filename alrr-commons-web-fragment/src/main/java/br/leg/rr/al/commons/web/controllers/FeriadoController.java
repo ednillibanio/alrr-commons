@@ -18,7 +18,7 @@ import br.leg.rr.al.commons.ejb.FeriadoLocal;
 import br.leg.rr.al.commons.jpa.Feriado;
 import br.leg.rr.al.core.CoreUtilsValidationMessages;
 import br.leg.rr.al.core.domain.Mes;
-import br.leg.rr.al.core.web.controller.DominioController;
+import br.leg.rr.al.core.web.controller.status.DominioController;
 import br.leg.rr.al.core.web.util.FacesMessageUtils;
 
 /**
@@ -61,8 +61,8 @@ public class FeriadoController extends DominioController<Feriado> {
 	 * </p>
 	 * <p>
 	 * Por exemplo, se o tipo do feriado for Nacional, então definirá o valor null
-	 * para municipio e uf. Caso o tipo seja Estadual, definirá o valor null
-	 * somente para municipio.
+	 * para municipio e uf. Caso o tipo seja Estadual, definirá o valor null somente
+	 * para municipio.
 	 * </p>
 	 * 
 	 */
@@ -70,10 +70,10 @@ public class FeriadoController extends DominioController<Feriado> {
 	protected void preInserir() {
 		super.preInserir();
 		if (getEntity().getTipo().equals(FeriadoType.NACIONAL)) {
-			getEntity().setLocalidade(null);
+			getEntity().setMunicipio(null);
 			getEntity().setUf(null);
 		} else if (getEntity().getTipo().equals(FeriadoType.ESTADUAL)) {
-			getEntity().setLocalidade(null);
+			getEntity().setMunicipio(null);
 		}
 	}
 
@@ -86,18 +86,18 @@ public class FeriadoController extends DominioController<Feriado> {
 	 * </p>
 	 * <p>
 	 * Por exemplo, se o tipo do feriado for Nacional, então definirá o valor null
-	 * para municipio e uf. Caso o tipo seja Estadual, definirá o valor null
-	 * somente para municipio.
+	 * para municipio e uf. Caso o tipo seja Estadual, definirá o valor null somente
+	 * para municipio.
 	 * </p>
 	 * 
 	 */
 	@Override
 	protected void preAtualizar() {
 		if (getEntity().getTipo().equals(FeriadoType.NACIONAL)) {
-			getEntity().setLocalidade(null);
+			getEntity().setMunicipio(null);
 			getEntity().setUf(null);
 		} else if (getEntity().getTipo().equals(FeriadoType.ESTADUAL)) {
-			getEntity().setLocalidade(null);
+			getEntity().setMunicipio(null);
 		}
 	}
 
@@ -147,8 +147,7 @@ public class FeriadoController extends DominioController<Feriado> {
 	}
 
 	/**
-	 * @param tiposSelecionados
-	 *            the tiposSelecionados to set
+	 * @param tiposSelecionados the tiposSelecionados to set
 	 */
 	public void setTiposSelecionados(List<FeriadoType> tiposSelecionados) {
 		this.tiposSelecionados = tiposSelecionados;
@@ -162,8 +161,7 @@ public class FeriadoController extends DominioController<Feriado> {
 	}
 
 	/**
-	 * @param mesesSelecionados
-	 *            the mesesSelecionados to set
+	 * @param mesesSelecionados the mesesSelecionados to set
 	 */
 	public void setMesesSelecionados(List<Mes> mesesSelecionados) {
 		this.mesesSelecionados = mesesSelecionados;

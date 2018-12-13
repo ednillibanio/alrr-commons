@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import br.leg.rr.al.commons.domain.EnderecoType;
 import br.leg.rr.al.commons.domain.EnderecoTypeConverter;
 import br.leg.rr.al.core.jpa.BaseEntityStatus;
+import br.leg.rr.al.localidade.jpa.Bairro;
+import br.leg.rr.al.localidade.jpa.Municipio;
 
 /**
  * Classe persistente que representa a tabela "endereco".
@@ -51,7 +53,7 @@ public class Endereco extends BaseEntityStatus<Integer> {
 
 	// uni-directional many-to-one association to Municipio
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "localidade_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "localidade_fk"))
+	@JoinColumn(name = "municipio_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "municipio_fk"))
 	private Municipio municipio;
 
 	@Column(length = 20, nullable = true)
@@ -59,14 +61,6 @@ public class Endereco extends BaseEntityStatus<Integer> {
 
 	@Column(length = 20, nullable = true)
 	private String longitude;
-
-	public Municipio getLocalidade() {
-		return municipio;
-	}
-
-	public void setLocalidade(Municipio municipio) {
-		this.municipio = municipio;
-	}
 
 	public EnderecoType getTipo() {
 		return tipo;
@@ -130,5 +124,13 @@ public class Endereco extends BaseEntityStatus<Integer> {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+
+	public Municipio getMunicipio() {
+		return municipio;
+	}
+
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
 	}
 }

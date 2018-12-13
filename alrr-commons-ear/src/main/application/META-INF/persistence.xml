@@ -22,22 +22,18 @@
 	<persistence-unit name="alrr-commons-persistence-ear">
 		<!-- DATA SOURCE -->
 		<jta-data-source>java:jboss/datasources/commons-ds</jta-data-source>
-
+		<!-- ENTIDADES DO MODULO LOCALIDADE-JPA -->
 		<class>br.leg.rr.al.commons.jpa.Bairro</class>
 		<class>br.leg.rr.al.commons.jpa.Cep</class>
+		<class>br.leg.rr.al.commons.jpa.Municipio</class>
+		<!-- ENTIDADES DO MODULO COMMONS-JPA -->
 		<class>br.leg.rr.al.commons.jpa.Endereco</class>
 		<class>br.leg.rr.al.commons.jpa.Feriado</class>
-		<class>br.leg.rr.al.commons.jpa.Localidade</class>
+
 		<class>br.leg.rr.al.commons.jpa.Pais</class>
 		<class>br.leg.rr.al.commons.jpa.Profissao</class>
 		<class>br.leg.rr.al.commons.jpa.Telefone</class>
 		<!-- classes que monta a base de endereços do IBGE -->
-		<class>br.leg.rr.al.core.jpa.BaseEntity</class>
-		<class>br.leg.rr.al.core.jpa.IbgeMesoregiao</class>
-		<class>br.leg.rr.al.core.jpa.IbgeMicroregiao</class>
-		<class>br.leg.rr.al.core.jpa.IbgeMunicipio</class>
-		<class>br.leg.rr.al.core.jpa.IbgeRegiao</class>
-		<class>br.leg.rr.al.core.jpa.IbgeUF</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<validation-mode>AUTO</validation-mode>
 		<!-- <jar-file>lib/alrr-core-utils-1.0.0.jar</jar-file> -->

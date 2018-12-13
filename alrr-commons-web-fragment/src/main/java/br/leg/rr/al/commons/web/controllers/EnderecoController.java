@@ -10,16 +10,16 @@ import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.SelectEvent;
 
-import br.leg.rr.al.commons.ejb.BairroLocal;
-import br.leg.rr.al.commons.ejb.CepLocal;
 import br.leg.rr.al.commons.ejb.EnderecoLocal;
-import br.leg.rr.al.commons.ejb.MunicipioLocal;
-import br.leg.rr.al.commons.jpa.Bairro;
-import br.leg.rr.al.commons.jpa.Cep;
 import br.leg.rr.al.commons.jpa.Endereco;
-import br.leg.rr.al.commons.jpa.Municipio;
 import br.leg.rr.al.core.dao.BeanException;
 import br.leg.rr.al.core.web.util.FacesMessageUtils;
+import br.leg.rr.al.localidade.ejb.BairroLocal;
+import br.leg.rr.al.localidade.ejb.CepLocal;
+import br.leg.rr.al.localidade.ejb.MunicipioLocal;
+import br.leg.rr.al.localidade.jpa.Bairro;
+import br.leg.rr.al.localidade.jpa.Cep;
+import br.leg.rr.al.localidade.jpa.Municipio;
 
 @Named
 @ViewScoped
@@ -50,8 +50,7 @@ public class EnderecoController implements Serializable {
 	 * Método usado para buscar Localidades. A busca é realizada por parte do nome
 	 * informado.
 	 * 
-	 * @param nome
-	 *            atributo nome da entidade municipio
+	 * @param nome atributo nome da entidade municipio
 	 * @return lista de localidades. <code>null </code> se nenhum encontrado.
 	 */
 	public List<Municipio> completeLocalidadePorNome(String nome) {
@@ -72,8 +71,7 @@ public class EnderecoController implements Serializable {
 	 * Método usado para buscar bairros na entidade Bairro. A busca é realizada por
 	 * parte do nome do bairro informado.
 	 * 
-	 * @param nome
-	 *            nome do bairro.
+	 * @param nome nome do bairro.
 	 * @return lista de bairros. <code>null </code> se nenhum encontrado.
 	 */
 	public List<Bairro> completeBairroPorNome(String nome) {
@@ -96,7 +94,8 @@ public class EnderecoController implements Serializable {
 	 */
 	public void buscarEnderecoPorCep() {
 
-		Cep cep = getCepBean().buscarCep(getEndereco().getCep());
+		// FIXME
+		Cep cep = null;// getCepBean().buscarCep(getEndereco().getCep());
 		Endereco end = enderecoBean.preencherEnderecoPorCep(cep);
 		if (end != null) {
 			setEndereco(end);
@@ -111,8 +110,8 @@ public class EnderecoController implements Serializable {
 	 */
 	public void preencherLocalidadePeloBairro(SelectEvent event) {
 		Bairro bairro = getEndereco().getBairro();
-		if (bairro != null && bairro.getLocalidade() != null) {
-			getEndereco().setLocalidade(bairro.getLocalidade());
+		if (bairro != null && bairro.getMunicipio() != null) {
+			getEndereco().setMunicipio(bairro.getMunicipio());
 		}
 
 	}
@@ -127,7 +126,7 @@ public class EnderecoController implements Serializable {
 			getEndereco().setCep(null);
 		} else {
 			getEndereco().setBairro(null);
-			getEndereco().setLocalidade(null);
+			getEndereco().setMunicipio(null);
 			getEndereco().setComplemento(null);
 			getEndereco().setLogradouro(null);
 			getEndereco().setNumero(null);
