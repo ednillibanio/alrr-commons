@@ -6,6 +6,7 @@
 		<groupId>br.leg.rr.al.commons</groupId>
 		<artifactId>alrr-commons</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>alrr-commons-ear</artifactId>
 	<packaging>ear</packaging>
@@ -23,15 +24,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ear-plugin</artifactId>
 				<inherited>true</inherited>
-				<configuration>
-					<modules>
-						<webModule>
-							<groupId>br.leg.rr.al.commons</groupId>
-							<artifactId>alrr-commons-web</artifactId>
-							<contextRoot>/commons</contextRoot>
-						</webModule>
-					</modules>
-				</configuration>
+				<!-- <configuration> <modules> <webModule> <groupId>br.leg.rr.al.commons</groupId> 
+					<artifactId>alrr-commons-web</artifactId> <contextRoot>/commons</contextRoot> 
+					</webModule> </modules> </configuration> -->
 			</plugin>
 			<!-- The WildFly plugin deploys your ear to a local WildFly container -->
 			<!-- Due to Maven's lack of intelligence with EARs we need to configure 
@@ -50,13 +45,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.leg.rr.al.commons</groupId>
-			<artifactId>alrr-commons-ejb</artifactId>
-			<type>ejb</type>
-		</dependency>
-		<dependency>
-			<groupId>br.leg.rr.al.commons</groupId>
-			<artifactId>alrr-commons-web</artifactId>
-			<type>war</type>
+			<artifactId>alrr-commons-jpa</artifactId>
 		</dependency>
 	</dependencies>
 </project>
