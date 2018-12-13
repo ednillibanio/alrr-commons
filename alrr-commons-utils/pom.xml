@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>alrr-commons</artifactId>
 		<groupId>br.leg.rr.al.commons</groupId>
-		<version>1.0.0</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<build>
 		<plugins>
@@ -23,11 +23,6 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 			<scope>provided</scope>
@@ -35,6 +30,11 @@
 		<dependency>
 			<groupId>br.leg.rr.al.core</groupId>
 			<artifactId>alrr-core-utils</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

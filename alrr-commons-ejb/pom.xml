@@ -8,7 +8,7 @@
 	<parent>
 		<artifactId>alrr-commons</artifactId>
 		<groupId>br.leg.rr.al.commons</groupId>
-		<version>1.0.0</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<developers>
 		<developer>
@@ -44,12 +44,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>br.leg.rr.al</groupId>
-			<artifactId>alrr-ejb-dep</artifactId>
-			<version>1.0.0</version>
-			<type>pom</type>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-text</artifactId>
 		</dependency>
@@ -60,6 +54,27 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.leg.rr.al.localidade</groupId>
+			<artifactId>alrr-localidade-ejb</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>ejb</type>
 		</dependency>
 	</dependencies>
 </project>
