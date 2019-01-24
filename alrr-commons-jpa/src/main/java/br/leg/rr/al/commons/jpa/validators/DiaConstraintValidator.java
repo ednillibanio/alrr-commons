@@ -6,11 +6,12 @@ import javax.validation.ConstraintValidatorContext;
 import br.leg.rr.al.core.helper.DataUtils;
 
 /**
- * @author <a href="mailto:ednil.libanio@gmail.com"> Ednil Libanio da Costa Junior</a><br/> 
- * Data Criação:   23-08-2018<br/>
+ * @author <a href="mailto:ednil.libanio@gmail.com"> Ednil Libanio da Costa
+ *         Junior</a><br/>
+ *         Data Criação: 23-08-2018<br/>
  * @since 1.0.0
  */
-public class DiaConstraintValidator implements ConstraintValidator<ValidDia, String> {
+public class DiaConstraintValidator implements ConstraintValidator<ValidDia, Integer> {
 
 	ValidDia check;
 
@@ -21,9 +22,9 @@ public class DiaConstraintValidator implements ConstraintValidator<ValidDia, Str
 	}
 
 	@Override
-	public boolean isValid(String dia, ConstraintValidatorContext ctx) {
+	public boolean isValid(Integer dia, ConstraintValidatorContext ctx) {
 
-		if (!DataUtils.isDia((String) dia)) {
+		if (!DataUtils.isDia(dia)) {
 			return false;
 		}
 

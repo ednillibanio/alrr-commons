@@ -27,13 +27,12 @@
 		<class>br.leg.rr.al.localidade.jpa.Bairro</class>
 		<class>br.leg.rr.al.localidade.jpa.Cep</class>
 		<class>br.leg.rr.al.localidade.jpa.Municipio</class>
-		<class>br.leg.rr.al.localidade.jpa.Localidade</class>
+		<!-- <class>br.leg.rr.al.localidade.jpa.Localidade</class> -->
 
 		<!-- ENTIDADES DO MODULO COMMONS-JPA -->
 		<class>br.leg.rr.al.commons.jpa.Endereco</class>
 		<class>br.leg.rr.al.commons.jpa.Feriado</class>
 		<class>br.leg.rr.al.commons.jpa.Gabinete</class>
-		<class>br.leg.rr.al.commons.jpa.Pais</class>
 		<class>br.leg.rr.al.commons.jpa.Profissao</class>
 		<class>br.leg.rr.al.commons.jpa.Telefone</class>
 
@@ -53,25 +52,21 @@
 			<!-- Defines if the persistence provider shall also create the required 
 				database schemas or only the other database objects like tables, sequences, 
 				etc.. -->
-			<property
-				name="javax.persistence.schema-generation.create-database-schemas"
-				value="true" />
+			<!-- <property name="javax.persistence.schema-generation.create-database-schemas" 
+				value="true" /> -->
 
 
 			<!-- Defines which scripts the persistence provider shall create. -->
-			<property
-				name="javax.persistence.schema-generation.database.action"
-				value="create" />
+			<!-- <property name="javax.persistence.schema-generation.database.action" 
+				value="create" /> -->
 
 			<!-- Defines how the schema shall be dropped. It can be done based on 
 				the mapping metadata, a script or a combination of both. -->
-			<property
-				name="javax.persistence.schema-generation.create-source"
-				value="metadata-then-script" />
+			<!-- <property name="javax.persistence.schema-generation.create-source" 
+				value="metadata-then-script" /> -->
 
-			<property
-				name="javax.persistence.schema-generation.create-script-source"
-				value="sql/create-localidade-views.sql" />
+			<!-- <property name="javax.persistence.schema-generation.create-script-source" 
+				value="sql/create-localidade-views.sql" /> -->
 
 			<!-- Defines which scripts the persistence provider shall create. A script 
 				target needs to be defined for each script to be created. -->

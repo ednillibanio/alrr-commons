@@ -12,8 +12,8 @@
 *																						*
 *																						*
 *****************************************************************************************
-* Autor:  Ednil Libanio da Costa Junior													*
-* Versão: 1.0.0 																		*
+* @autor:	Ednil Libanio da Costa Junior												*
+* @since:	1.0.0 																		*
 ****************************************************************************************/
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -24,7 +24,8 @@
 	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:alcore="http://al.rr.leg.br/facelets/core"
-	xmlns:alcommons="http://al.rr.leg.br/facelets/commons"
+	xmlns:alloc="http://al.rr.leg.br/facelets/localidade"
+	xmlns:alcore="http://al.rr.leg.br/facelets/core"
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
 
@@ -63,11 +64,16 @@
 
 		<!--   C A M P O:   NO M E   D O   F E R I A D O   -->
 		<al:campo value="Nome" for="nome">
-			<p:inputText id="nome" required="true"
-				value="#{feriadoController.entity.nome}" label="Nome"
-				converter="#{capitalizeFullyConverter}">
-				<p:watermark value="Nome do Feriado" for="nome" />
-			</p:inputText>
+			<div class="input-group">
+				<p:inputText id="nome" required="true"
+					value="#{feriadoController.entity.nome}" label="Nome"
+					converter="#{capitalizeFullyConverter}">
+					<p:watermark value="Nome do Feriado" for="nome" />
+				</p:inputText>
+				<alcore:botao-capitalizar param="#{feriadoController.entity.nome}"
+					target="#{feriadoController.entity.nome}" process="nome"
+					update="nome" />
+			</div>
 		</al:campo>
 
 
@@ -95,20 +101,9 @@
 			rendered="#{feriadoController.entity.tipo eq 'MUNICIPAL'}">
 
 			<al:campo for="locmun" value="Município">
-
-				<div class="ui-inputgroup">
-					<alcommons:autocomplete-localidade
-						value="#{feriadoController.entity.localidade}"
-						forceSelection="true" maxResults="8" minQueryLength="3" />
-
-					<!-- BOTÃO: ADICIONAR LOCALIDADE -->
-					<p:commandButton id="btn-add-localidade"
-						icon="#{core['btn.novo.icon']}" title="Nova Localidade"
-						process="@this" update="dlg-localidade"
-						action="#{localidadeController.novo()}" />
-
-				</div>
-
+				<alloc:autocomplete-municipio
+					value="#{feriadoController.entity.localidade}"
+					forceSelection="true" maxResults="8" minQueryLength="3" />
 			</al:campo>
 
 		</h:panelGroup>

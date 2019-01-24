@@ -9,11 +9,12 @@ import javax.inject.Named;
 import br.leg.rr.al.commons.ejb.PartidoPoliticoLocal;
 import br.leg.rr.al.commons.jpa.PartidoPolitico;
 import br.leg.rr.al.core.dao.BeanException;
+import br.leg.rr.al.core.web.controller.status.CompleteControllerEntityStatus;
 import br.leg.rr.al.core.web.util.FacesMessageUtils;
 
 @Named
 @Stateless
-public class PartidoPoliticoCompleteController extends BaseCompleteController<PartidoPolitico, Integer> {
+public class PartidoPoliticoCompleteController extends CompleteControllerEntityStatus<PartidoPolitico, Integer> {
 
 	@EJB
 	PartidoPoliticoLocal bean;

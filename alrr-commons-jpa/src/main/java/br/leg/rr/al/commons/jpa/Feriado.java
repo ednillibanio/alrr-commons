@@ -46,7 +46,7 @@ public class Feriado extends Dominio {
 	@ValidDia
 	@NotNull(message = "Dia: campo obrigatório.")
 	@Column(length = 2, nullable = false)
-	private String dia = null;
+	private Integer dia = null;
 
 	@NotNull(message = "Mês: campo obrigatório.")
 	@Convert(converter = MesConverter.class)
@@ -77,7 +77,7 @@ public class Feriado extends Dominio {
 	 * 
 	 * @return dia
 	 */
-	public String getDia() {
+	public Integer getDia() {
 		return dia;
 	}
 
@@ -86,7 +86,7 @@ public class Feriado extends Dominio {
 	 * 
 	 * @param dia
 	 */
-	public void setDia(String dia) {
+	public void setDia(Integer dia) {
 		this.dia = dia;
 	}
 

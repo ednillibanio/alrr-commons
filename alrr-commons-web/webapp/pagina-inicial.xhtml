@@ -10,17 +10,16 @@
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
 
-<ui:composition template="/default.xhtml">
-	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />
+<ui:composition template="/template.xhtml">
+	<ui:define name="head">
+		<ui:include src="/head.xhtml" />
 	</ui:define>
-	<ui:define name="content">
-		<p:dashboard id="board">
 
-			<p:panel id="pnl-feriados" header="Segurança">
-				Teste
-			</p:panel>
-		</p:dashboard>
+	<ui:define name="sidebar">
+		<ui:include src="/sidebar.xhtml" />
+	</ui:define>
+	<ui:define name="title">
+	Módulo Commons
 	</ui:define>
 </ui:composition>
 </html>

@@ -12,8 +12,8 @@
 *																						*
 *																						*
 *****************************************************************************************
-* Autor:  Ednil Libanio da Costa Junior													*
-* Versão: 1.0.0 																		*
+* @author:  Ednil Libanio da Costa Junior												*
+* @since: 1.0.0 																		*
 ****************************************************************************************/
 -->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
@@ -28,57 +28,43 @@
 	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br"
 	template="/pnl-filtro-pesquisa.xhtml">
 
-	<!-- PAINEL DE FILTROS -->
+	<!--   P A I N E L   D E   F I L T R O S   -->
 	<ui:define name="filtros">
 
 
 		<!-- Esse componente deve vir sempre antes dos filtros para que a validação funcione. -->
 		<alcore:validateOneOrMore components="tipo nome mes" />
 
-		<!--   F I L T R O:   T I P O   F E R I A D O   -->
-		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-2 ui-md-2">
-				<p:outputLabel value="Tipo" label="Tipo" for="tipo" />
-			</div>
-			<div class="ui-g-12 ui-lg-4 ui-md-8">
-				<p:selectManyButton value="#{feriadoController.tiposSelecionados}"
-					id="tipo" converter="omnifaces.GenericEnumConverter">
-					<f:selectItems value="#{commonsEnumFactory.tiposFeriados}"
-						var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
-				</p:selectManyButton>
-			</div>
-		</div>
+		<p:panelGrid columns="4" layout="grid"
+			styleClass="ui-panelgrid-blank ui-fluid" id="pnl-filtro"
+			columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+
+			<!--   F I L T R O:   T I P O   F E R I A D O   -->
+			<p:outputLabel value="Tipo" label="Tipo" for="tipo" />
+			<p:selectManyButton value="#{feriadoController.tiposSelecionados}"
+				id="tipo" converter="omnifaces.GenericEnumConverter">
+				<f:selectItems value="#{commonsEnumFactory.tiposFeriados}"
+					var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
+			</p:selectManyButton>
 
 
-		<!--   F I L T R O:   N O M E   D O   F E R I A D O   -->
-		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-2 ui-md-2">
-				<p:outputLabel value="Nome" for="nome" />
-			</div>
-			<div class="ui-g-12 ui-lg-4 ui-md-4">
-				<p:inputText id="nome" label="Nome"
-					value="#{feriadoController.nome}">
-					<p:ajax resetValues="true" />
-				</p:inputText>
-			</div>
-		</div>
+			<!--   F I L T R O:   N O M E   D O   F E R I A D O   -->
+			<p:outputLabel value="Nome" for="nome" />
+			<p:inputText id="nome" label="Nome" value="#{feriadoController.nome}">
+				<p:ajax resetValues="true" />
+			</p:inputText>
 
 
-		<!--   F I L T R O:   M Ê S   D O   F E R I A D O   -->
-		<div class="ui-g">
-			<div class="ui-g-12 ui-lg-2 ui-md-2">
-				<p:outputLabel value="Meses" label="Meses" for="mes" />
-			</div>
-			<div class="ui-g-12 ui-lg-4 ui-md-4">
-				<p:selectCheckboxMenu value="#{feriadoController.mesesSelecionados}"
-					id="mes" converter="omnifaces.GenericEnumConverter" multiple="true">
-					<f:selectItems value="#{commonsEnumFactory.meses}" var="_mes"
-						itemValue="#{_mes}" itemLabel="#{_mes.label}" />
-				</p:selectCheckboxMenu>
-			</div>
-		</div>
-
-
+			<!--   F I L T R O:   M Ê S   D O   F E R I A D O   -->
+			<p:outputLabel value="Meses" label="Meses" for="mes" />
+			<p:selectCheckboxMenu value="#{feriadoController.mesesSelecionados}"
+				id="mes" converter="omnifaces.GenericEnumConverter" multiple="true">
+				<f:selectItems value="#{commonsEnumFactory.meses}" var="_mes"
+					itemValue="#{_mes}" itemLabel="#{_mes.label}" />
+			</p:selectCheckboxMenu>
+			
+			
+		</p:panelGrid>
 	</ui:define>
 
 	<!--   B O T Ã O:   L I M P A R   -->

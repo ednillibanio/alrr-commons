@@ -12,8 +12,8 @@
 *																						*
 *																						*
 *****************************************************************************************
-* Autor:  Ednil Libanio da Costa Junior													*
-* Versão: 1.0.0 																		*
+* @autor:	Ednil Libanio da Costa Junior												*
+* @since:	1.0.0 																		*
 ****************************************************************************************/
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -28,68 +28,61 @@
 	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
 <ui:composition template="/pg.xhtml">
 
-
-	<!-- MENU GERAL DO SISTEMA  -->
-	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />
+	<ui:define name="head">
+		<ui:include src="/head.xhtml" />
 	</ui:define>
 
-	<!-- HEADER DO DIV MAIN  -->
-	<ui:define name="header-content">
-		<o:form id="frm-header-content">
-
-			<al:header-content titulo="Pesquisar Feriados">
-				<ui:include src="manual/feriado-manual.xhtml" />
-			</al:header-content>
-
-		</o:form>
+	<ui:define name="sidebar">
+		<ui:include src="/sidebar.xhtml" />
+	</ui:define>
+	<ui:define name="title">
+		Pesquisar Feriados
 	</ui:define>
 
-	<!-- FORMULÁRIO DE PESQUISA DE FERIADOS -->
-	<ui:define name="form-content">
+	<!--   F O R M U L Á R I O   D E   P E S Q U I S A   -->
+	<ui:define name="content">
 
 		<o:form id="frm-pg-feriados">
-			<h:outputScript library="js" name="contextMenu.js" />
-			<!-- <p:defaultCommand target="frm-pg-feriados:btn-pesquisar" /> -->
+			<div class="card filtro">
 
-			<!-- utilizando css para procurar os componentes. Maneira mais facil. -->
-			<alcore:ajax-loading trigger="@(.btn-pesquisar)" id="block"
-				block="@(.result)" />
+				<al:header-content titulo="Pesquisar Feriados">
+					<ui:include src="manual/feriado-manual.xhtml" />
+				</al:header-content>
 
-			<p:messages id="msgs" styleClass="msgs">
-				<p:autoUpdate />
-			</p:messages>
+				<p:defaultCommand target="btn-pesquisar" />
+				<p:focus context="pnl-filtro" />
+				<!-- utilizando css para procurar os componentes. Maneira mais facil. -->
+				<alcore:ajax-loading trigger="@(.btn-pesquisar)" id="block"
+					block="@(.filtro)" />
+
+				<p:growl id="growl" />
 
 
-			<!--  B O T Ã O:   N O V O   F E R I A D O   -->
-			<div class="ui-g ui-fluid">
-				<div class="ui-g-12 ui-md-3 ui-lg-3 ui-xl-3">
-					<alcore:botao-novo id="btn-novo-feriado" value="Novo Feriado"
-						action="#{feriadoController.novo()}" update="dlg-feriado"
-						process="@this" />
+				<!--  B O T Ã O:   N O V O   F E R I A D O  -->
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12 ui-md-4 ui-lg-3 ui-xl-2">
+						<alcore:botao-novo id="btn-novo" value="Novo Feriado"
+							action="#{feriadoController.novo()}" update="dlg-feriado"
+							process="@this" />
+					</div>
 				</div>
+
+
+
+				<!--  P A I N E L:   F I L T R O   D A   P E S Q U I S A  -->
+				<al:filtro-obrigatorio-informativo />
+				<ui:include src="componentes/pnl-feriado-filtro.xhtml" />
 			</div>
-
-
-			<!-- PAINEL: FILTRO DA PESQUISA -->
-			<al:filtro-obrigatorio-informativo />
-			<ui:include src="componentes/pnl-feriado-filtro.xhtml" />
-
+			<!--  P A I N E L:   R E S U L T A D O   D A   P E S Q U I S A  -->
 			<ui:include src="componentes/pnl-feriado-resultado.xhtml" />
-
-			<ui:include src="confirm-dialog.xhtml" />
 
 		</o:form>
 
-		<!-- DIALOGS -->
-		<ui:include src="dlg-feriado.xhtml" />
-		<ui:include src="dlg-localidade.xhtml" />
 
+		<!--  D I A L O G S  -->
+		<ui:include src="dlg-feriado.xhtml" />
 
 	</ui:define>
-
-
-
 </ui:composition>
 </html>
 

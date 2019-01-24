@@ -10,8 +10,36 @@
 			<to-view-id>/pagina-inicial.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>home</from-outcome>
-			<to-view-id>/pagina-inicial.xhtml</to-view-id>
+			<from-outcome>pg-feriados</from-outcome>
+			<to-view-id>/pages/commons/pg-feriados.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<application>
+		<action-listener>org.primefaces.application.DialogActionListener</action-listener>
+		<navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+		<view-handler>org.primefaces.application.DialogViewHandler</view-handler>
+		<resource-library-contracts>
+			<contract-mapping>
+				<url-pattern>/*</url-pattern>
+				<contracts>omega</contracts>
+			</contract-mapping>
+		</resource-library-contracts>
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>br.leg.rr.al.core.componentes</base-name>
+			<var>core</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>br.leg.rr.al.commons.commons</base-name>
+			<var>commons</var>
+		</resource-bundle>
+	</application>
+	<factory>
+		<exception-handler-factory>org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+	<lifecycle>
+		<phase-listener>org.omnifaces.eventlistener.ResetInputAjaxActionListener</phase-listener>
+	</lifecycle>
 </faces-config>
