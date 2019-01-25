@@ -1,3 +1,6 @@
+/**
+ * Esse script não funciona para ser executado em sequencia. Tem que executar manualmente o create view no pgadmin antes de criar as tabelas.
+ */
 DROP TABLE IF EXISTS commons_schema.municipio;
 DROP TABLE IF EXISTS commons_schema.bairro;
 DROP TABLE IF EXISTS commons_schema.cep;
