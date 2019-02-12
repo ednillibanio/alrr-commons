@@ -18,7 +18,7 @@ import br.leg.rr.al.commons.ejb.FeriadoLocal;
 import br.leg.rr.al.commons.jpa.Feriado;
 import br.leg.rr.al.core.CoreUtilsValidationMessages;
 import br.leg.rr.al.core.domain.Mes;
-import br.leg.rr.al.core.web.controller.status.DominioController;
+import br.leg.rr.al.core.web.controller.status.DialogControllerEntityStatus;
 import br.leg.rr.al.core.web.util.FacesMessageUtils;
 
 /**
@@ -29,7 +29,7 @@ import br.leg.rr.al.core.web.util.FacesMessageUtils;
  */
 @Named
 @ViewScoped
-public class FeriadoController extends DominioController<Feriado> {
+public class FeriadoController extends DialogControllerEntityStatus<Feriado, Integer> {
 
 	/**
 	 * 
@@ -51,6 +51,7 @@ public class FeriadoController extends DominioController<Feriado> {
 
 		setNovoDialogName("dlg-feriado");
 		setEditarDialogName("dlg-feriado");
+		setDetalhesDialogName("dlg-feriado-detalhes");
 	}
 
 	/**

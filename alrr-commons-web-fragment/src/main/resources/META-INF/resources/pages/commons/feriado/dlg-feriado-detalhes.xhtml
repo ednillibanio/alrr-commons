@@ -1,79 +1,77 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!--
+/****************************************************************************************
+* ALE-RR Licença																		*
+* Copyright (C) 2018, ALE-RR															*
+* Boa Vista, RR - Brasil																*
+* Todos os direitos reservados.															*
+* 																						*
+* Este programa é propriedade da Assembleia Legislativa do Estado de Roraima e 			*
+* não é permitida a distribuição, alteração ou cópia da mesma sem prévia autoriazação.	*
+*																						*
+*																						*
+*****************************************************************************************
+* @autor:	Ednil Libanio da Costa Junior												*
+* @since:	1.0.0 																		*
+****************************************************************************************/
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:kmdr="http://java.sun.com/jsf/composite/components/commons"
-	xmlns:o="http://omnifaces.org/ui">
+	xmlns:alcore="http://al.rr.leg.br/facelets/core"
+	xmlns:alloc="http://al.rr.leg.br/facelets/localidade"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
+
+<ui:composition template="/dialog-detalhes.xhtml">
+
+	<!--   P A R A M E T R O S   D E   C O N F I G U R A Ç Ã O   -->
+	<!--   D O   T E M P L A T E:   D I A L O G   -->
+	<ui:param name="dlgid" value="#{feriadoController.detalhesDialogName}" />
+	<ui:param name="widgetVar"
+		value="#{feriadoController.detalhesDialogName}" />
+	<ui:param name="frmid" value="frm-feriado-detalhes" />
+	<ui:param name="panelheader" value="Detalhes do Feriado" />
+	<ui:param name="columns" value="2" />
 
 
-
-	<p:dialog id="dlgFeriadoDetalhes" widgetVar="_dlgFeriadoDetalhes"
-		modal="true" resizable="false" closable="false" closeOnEscape="true"
-		showHeader="false" responsive="true" appendTo="@(body)"
-		style="width:100%">
-
-		<h:form id="frmFeriadoDetalhes">
-			<o:importConstants type="br.kmdr.util.domain.Mes" />
-			<o:importConstants type="br.kmdr.util.domain.FeriadoType" />
-
-			<div class="ui-fluid">
-				<p:panel header="#{bundle_com['feriado.dialog.header.detalhes']}"
-					id="pnl-detalhes">
-
-					<p:panelGrid id="grid-detalhes" columns="2" layout="grid"
-						columnClasses="label, value" styleClass="ui-panelgrid-blank"
-						rendered="#{not empty feriadoController.entity }">
+	<!-- ####################################### -->
+	<!--   C O N T E Ú D O   D O   D I A L O G   -->
+	<!-- ####################################### -->
+	<ui:define name="dialog-content">
 
 
-						<!-- TIPO FERIADO -->
-						<h:outputText value="#{bundle_com['feriado.label.tipo.feriado']}" />
-						<h:outputText value="#{feriadoController.entity.tipo}"
-							converter="omnifaces.GenericEnumConverter" id="etipo" />
+		<!-- TIPO FERIADO -->
+		<al:campo-detalhe label="Tipo"
+			value="#{feriadoController.entity.tipo.label}" />
 
-						<!-- NOME -->
-						<h:outputText value="#{bundle_com['feriado.label.nome']}" />
-						<h:outputText id="vnome" value="#{feriadoController.entity.nome}" />
+		<!-- NOME -->
+		<al:campo-detalhe label="Feriado"
+			value="#{feriadoController.entity.nome}" />
 
+		<!-- DIA -->
+		<al:campo-detalhe label="Dia" value="#{feriadoController.entity.dia}" />
 
-						<!-- DIA -->
-						<h:outputText value="#{bundle_com['feriado.label.dia']}" />
-						<h:outputText id="vdia" value="#{feriadoController.entity.dia}" />
-
-
-						<!-- MES -->
-						<p:outputLabel value="#{bundle_com['feriado.label.mes']}"
-							for="vmes" />
-						<h:outputText id="vmes" type="mes"
-							value="#{feriadoController.entity.mes}"
-							converter="omnifaces.GenericEnumConverter" />
+		<!-- MES -->
+		<al:campo-detalhe label="Mês"
+			value="#{feriadoController.entity.mes.label}" />
 
 
-						<!-- LOCALIDADE -> TIPO FERIADO == MUNICIPAL -->
-						<p:outputLabel value="#{bundle_com['feriado.label.localidade']}"
-							for="vlocalidade"
-							rendered="#{feriadoController.entity.tipo eq 'MUNICIPAL'}" />
-						<h:outputText id="vlocalidade"
-							value="#{feriadoController.entity.localidade.nome} - #{feriadoController.entity.localidade.uf}"
-							rendered="#{feriadoController.entity.tipo eq 'MUNICIPAL'}" />
+		<!-- LOCALIDADE: TIPO FERIADO == MUNICIPAL -->
+		<al:campo-detalhe label="Município"
+			rendered="#{feriadoController.entity.tipo eq 'MUNICIPAL'}"
+			value="#{feriadoController.entity.municipio.nome}" />
 
+		<!-- UF: TIPO FERIADO != NACIONAL -->
+		<al:campo-detalhe label="Uf"
+			rendered="#{feriadoController.entity.tipo ne 'NACIONAL'}"
+			value="#{feriadoController.entity.uf.label}" />
 
-						<!-- UF -> TIPO FERIADO == ESTADUAL -->
-						<p:outputLabel value="#{bundle_com['feriado.label.uf']}" for="vuf"
-							rendered="#{feriadoController.entity.tipo eq 'ESTADUAL'}" />
-						<h:outputText id="vuf" value="#{feriadoController.entity.uf}"
-							rendered="#{feriadoController.entity.tipo eq 'ESTADUAL'}" />
-
-					</p:panelGrid>
-
-
-					<f:facet name="footer">
-						<kmdr:botao-fechar oncomplete="PF('_dlgFeriadoDetalhes').hide();" />
-					</f:facet>
-				</p:panel>
-			</div>
-
-		</h:form>
-	</p:dialog>
-
+	</ui:define>
 </ui:composition>
+</html>

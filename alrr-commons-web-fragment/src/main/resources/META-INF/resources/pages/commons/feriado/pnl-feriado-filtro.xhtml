@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!--
+/****************************************************************************************
+* ALE-RR Licença																		*
+* Copyright (C) 2018, ALE-RR															*
+* Boa Vista, RR - Brasil																*
+* Todos os direitos reservados.															*
+* 																						*
+* Este programa é propriedade da Assembleia Legislativa do Estado de Roraima e 			*
+* não é permitida a distribuição, alteração ou cópia da mesma sem prévia autoriazação.	*
+*																						*
+*																						*
+*****************************************************************************************
+* @author:  Ednil Libanio da Costa Junior												*
+* @since: 1.0.0 																		*
+****************************************************************************************/
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:alcore="http://al.rr.leg.br/facelets/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br"
+	template="/pnl-filtro-pesquisa.xhtml">
+
+	<!--   P A I N E L   D E   F I L T R O S   -->
+	<ui:define name="filtros">
+
+
+		<!-- Esse componente deve vir sempre antes dos filtros para que a validação funcione. -->
+		<alcore:validateOneOrMore components="tipo nome mes" />
+
+		<p:panelGrid columns="4" layout="grid"
+			styleClass="ui-panelgrid-blank ui-fluid" id="pnl-filtro"
+			columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+
+			<!--   F I L T R O:   T I P O   F E R I A D O   -->
+			<p:outputLabel value="Tipo" label="Tipo" for="tipo" />
+			<p:selectManyButton value="#{feriadoController.tiposSelecionados}"
+				id="tipo" converter="omnifaces.GenericEnumConverter">
+				<f:selectItems value="#{commonsEnumFactory.tiposFeriados}"
+					var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
+			</p:selectManyButton>
+
+
+			<!--   F I L T R O:   N O M E   D O   F E R I A D O   -->
+			<p:outputLabel value="Nome" for="nome" />
+			<p:inputText id="nome" label="Nome" value="#{feriadoController.nome}">
+				<p:ajax resetValues="true" />
+			</p:inputText>
+
+
+			<!--   F I L T R O:   M Ê S   D O   F E R I A D O   -->
+			<p:outputLabel value="Meses" label="Meses" for="mes" />
+			<p:selectCheckboxMenu value="#{feriadoController.mesesSelecionados}"
+				id="mes" converter="omnifaces.GenericEnumConverter" multiple="true">
+				<f:selectItems value="#{commonsEnumFactory.meses}" var="_mes"
+					itemValue="#{_mes}" itemLabel="#{_mes.label}" />
+			</p:selectCheckboxMenu>
+			
+			
+		</p:panelGrid>
+	</ui:define>
+
+	<!--   B O T Ã O:   L I M P A R   -->
+	<ui:define name="btn-limpar">
+		<alcore:botao-limpar id="btnlimpar"
+			action="#{feriadoController.limpar()}" process="@this" update="@form" />
+	</ui:define>
+
+	<!--   B O T Ã O:   P E S Q U I S A R   -->
+	<ui:define name="btn-pesquisar">
+		<alcore:botao-pesquisar id="btnpesquisar"
+			action="#{feriadoController.pesquisar()}"
+			update="frm-pg-feriados @(.result) @(.msgs)" />
+	</ui:define>
+
+</ui:composition>

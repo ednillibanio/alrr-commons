@@ -8,7 +8,7 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
 import br.leg.rr.al.commons.web.CommonsWebValidationMessages;
-import br.leg.rr.al.core.helper.DataUtils;
+import br.leg.rr.al.core.utils.DataUtils;
 import br.leg.rr.al.core.utils.MessageUtils;
 import br.leg.rr.al.core.web.util.FacesMessageUtils;
 
