@@ -27,10 +27,10 @@
 		<class>br.leg.rr.al.localidade.jpa.Bairro</class>
 		<class>br.leg.rr.al.localidade.jpa.Cep</class>
 		<class>br.leg.rr.al.localidade.jpa.Municipio</class>
-		<!-- <class>br.leg.rr.al.localidade.jpa.Localidade</class> -->
+		<class>br.leg.rr.al.localidade.jpa.Pais</class>
+		<class>br.leg.rr.al.localidade.jpa.UnidadeFederativa</class>
 
 		<!-- ENTIDADES DO MODULO COMMONS-JPA -->
-		<class>br.leg.rr.al.commons.jpa.Endereco</class>
 		<class>br.leg.rr.al.commons.jpa.Feriado</class>
 		<class>br.leg.rr.al.commons.jpa.Gabinete</class>
 		<class>br.leg.rr.al.commons.jpa.Profissao</class>

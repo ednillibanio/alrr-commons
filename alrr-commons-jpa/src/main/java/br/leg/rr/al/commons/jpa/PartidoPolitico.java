@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import br.leg.rr.al.core.jpa.Dominio;
+import org.hibernate.search.annotations.Indexed;
+
+import br.leg.rr.al.core.jpa.DominioIndexado;
 
 /**
  * Classe persistente que representa a tabela "partido_politico".
@@ -15,8 +17,9 @@ import br.leg.rr.al.core.jpa.Dominio;
  * @since 1.0.0
  */
 @Entity
-@Table(name="partido_politico")
-public class PartidoPolitico extends Dominio {
+@Table(name = "partido_politico")
+@Indexed
+public class PartidoPolitico extends DominioIndexado {
 
 	/**
 	 * 

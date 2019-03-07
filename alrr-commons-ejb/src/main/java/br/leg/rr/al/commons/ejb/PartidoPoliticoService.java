@@ -11,12 +11,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import br.leg.rr.al.commons.jpa.PartidoPolitico;
-import br.leg.rr.al.core.dao.DominioJPADaoStatus;
+import br.leg.rr.al.core.dao.BaseDominioIndexadoJPADao;
 import br.leg.rr.al.core.domain.StatusType;
 
 @Named
 @Stateless
-public class PartidoPoliticoService extends DominioJPADaoStatus<PartidoPolitico> implements PartidoPoliticoLocal {
+public class PartidoPoliticoService extends BaseDominioIndexadoJPADao<PartidoPolitico> implements PartidoPoliticoLocal {
 
 	/**
 	 * 
