@@ -3,7 +3,7 @@ package br.leg.rr.al.commons.web.controllers;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import br.leg.rr.al.commons.ejb.PartidoPoliticoLocal;
@@ -13,7 +13,7 @@ import br.leg.rr.al.core.web.controller.status.CompleteControllerEntityStatus;
 import br.leg.rr.al.core.web.util.FacesMessageUtils;
 
 @Named
-@Stateless
+@RequestScoped
 public class PartidoPoliticoCompleteController extends CompleteControllerEntityStatus<PartidoPolitico, Integer> {
 
 	@EJB
@@ -25,8 +25,8 @@ public class PartidoPoliticoCompleteController extends CompleteControllerEntityS
 	}
 
 	/**
-	 * Método usado para buscar Localidades. A busca é realizada por parte do
-	 * nome informado.
+	 * Método usado para buscar Localidades. A busca é realizada por parte do nome
+	 * informado.
 	 * 
 	 * @param nome
 	 * @return lista de localidades. <code>null </code> se nenhum encontrado.
