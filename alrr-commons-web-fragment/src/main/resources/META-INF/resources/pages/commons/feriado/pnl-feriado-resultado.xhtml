@@ -21,8 +21,9 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/facelets/core"
 	xmlns:alcore="http://al.rr.leg.br/facelets/core"
+	xmlns:alloc="http://al.rr.leg.br/tags/localidade"
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:shiro="http://shiro.apache.org/tags"
@@ -53,26 +54,26 @@
 
 
 		<!-- TIPO FERIADO -->
-		<p:column sortBy="#{var.tipo}" id="cTipo" width="10%"
+		<p:column sortBy="#{var.tipo.label}" id="cTipo" width="10%"
 			headerText="Tipo">
 			<h:outputText value="#{var.tipo.label}" />
 		</p:column>
 
 
 		<!-- MUNICIPIO -->
-		<p:column sortBy="#{var.municipio}" id="cmunicipio" width="25%"
+		<p:column sortBy="#{var.municipio.nome}" id="cmunicipio" width="25%"
 			headerText="Município">
 			<h:outputText value="#{var.municipio.nome}" />
 		</p:column>
 
 
 		<!-- UF -->
-		<p:column sortBy="#{var.uf}" id="cUf" width="17%" headerText="UF">
-			<h:outputText value="#{var.uf.label}" />
+		<p:column sortBy="#{var.uf.nome}" id="cUf" width="17%" headerText="UF">
+			<h:outputText value="#{var.uf.nome}" />
 		</p:column>
 
 		<!-- SITUAÇÃO -->
-		<p:column sortBy="#{var.situacao}" id="sit" width="12%"
+		<p:column sortBy="#{var.situacao.label}" id="sit" width="12%"
 			headerText="Situação">
 			<h:outputText value="#{var.situacao.label}" />
 		</p:column>

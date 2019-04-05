@@ -3,7 +3,7 @@ package br.leg.rr.al.commons.jpa.validators;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import br.leg.rr.al.core.helper.DataUtils;
+import br.leg.rr.al.core.utils.DataUtils;
 
 /**
  * @author <a href="mailto:ednil.libanio@gmail.com"> Ednil Libanio da Costa

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	lang="#{sistemaController.sistema.locale.language}">
+<f:view locale="#{sistemaController.sistema.locale}">
+	<ui:include src="/resources/components/head.xhtml" />
+
+	<h:body>
+		<ui:include src="/resources/components/menu.xhtml" />
+		<h:form prependId="false" id="frmUsuarioNew">
+
+			<h1 class="title">#{bundle['header.cadastrar.usuario']}</h1>
+			<p:separator />
+			<p:messages id="msgs" />
+			<p:blockUI block="frmUsuarioNew" id="refresh">
+				<p:graphicImage value="#{bundle['app.resources.img.loader']}" />Aguarde...
+			</p:blockUI>
+			<p:panel header="Dados Pessoais" id="pnlDadosPessoais"
+				menuTitle="Opções">
+				<f:facet name="options">
+					<p:menu>
+						<p:menuitem value="#{bundle['button.cadastrar.pessoa.fisica']}"
+							icon="ui-icon-newwin" oncomplete="dlgPessoaFisicaNew.show()"
+							update=":_dlgPessoaFisicaNew"
+							actionListener="#{pessoaFisicaController.novo}" immediate="true" />
+					</p:menu>
+				</f:facet>
+
+				<h:panelGrid columns="2" columnClasses="column" cellpadding="10">
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.cpf']}"
+						for="ccpf" />
+					<p:outputPanel>
+						<p:inputMask id="ccpf" value="#{usuarioController.cpf}"
+							label="#{bundle['pessoa.fisica.label.cpf']}"
+							converter="#{cpfConverter}" size="14" maxlength="11"
+							onblur="refresh.show()" mask="999.999.999-99">
+							<p:ajax process="@this"
+								listener="#{usuarioController.findPessoaByCpf}"
+								update="pnlDadosPessoais msgs" />
+						</p:inputMask>
+					</p:outputPanel>
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.nome']}"
+						for="pessoaNome" />
+					<p:autoComplete value="#{usuarioController.usuario.pessoaFisica}"
+						id="pessoaNome"
+						completeMethod="#{usuarioController.findPessoaByNome()}" var="pf"
+						itemValue="#{pf}" itemLabel="#{pf.nome}" forceSelection="true"
+						minQueryLength="4" maxResults="8" size="30"
+						converter="#{entityConverter}"
+						label="#{bundle['pessoa.fisica.label.nome']}">
+						<p:column>
+							#{pf.nome}, #{pf.cpf}
+						</p:column>
+						<p:ajax event="itemSelect" update="msgs pnlDadosPessoais"
+							listener="#{usuarioController.selecionarPessoa}" process="@this" />
+					</p:autoComplete>
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.sexo']}"
+						for="csexo" />
+					<h:outputText id="csexo"
+						value="#{enum[usuarioController.usuario.pessoaFisica.sexo]}" />
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.label.data.nascimento']}"
+						for="cdataNascimento" />
+					<h:outputText id="cdataNascimento"
+						value="#{usuarioController.usuario.pessoaFisica.dataNascimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+					<h:outputLabel value="#{bundle['pessoa.label.email']}" for="cemail" />
+					<h:outputText id="cemail" type="email"
+						value="#{usuarioController.usuario.pessoaFisica.email}" />
+				</h:panelGrid>
+			</p:panel>
+
+			<ui:include
+				src="/resources/components/admin/controle/pnlDadosAcesso.xhtml" />
+
+			<center>
+				<h:panelGroup layout="block">
+					<p:commandButton action="#{usuarioController.salvar}"
+						value="#{bundle['button.salvar']}" id="cbtnSalvar" type="submit"
+						onclick="refresh.show();" update="frmUsuarioNew">
+					</p:commandButton>
+					<p:commandButton action="#{usuarioController.cancelar}"
+						value="#{bundle['button.cancelar']}" id="cbtnCancelar"
+						immediate="true">
+					</p:commandButton>
+				</h:panelGroup>
+			</center>
+
+		</h:form>
+
+		<ui:include src="dlgPerfilAdd.xhtml" />
+		<ui:include
+			src="/resources/components/admin/controle/dlgPessoaFisicaNew.xhtml" />
+
+	</h:body>
+</f:view>
+</html>

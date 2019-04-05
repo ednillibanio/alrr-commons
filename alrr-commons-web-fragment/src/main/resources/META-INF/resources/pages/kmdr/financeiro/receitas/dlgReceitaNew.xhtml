@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	lang="#{sistemaController.sistema.locale.language}">
+
+<ui:composition>
+	<f:view locale="#{sistemaController.sistema.locale}"
+		contentType="text/html">
+
+		<p:dialog widgetVar="dlgReceitaNew" header="Nova Receita" width="800"
+			id="_dlgReceitaNew" appendToBody="true" modal="true">
+			<script type="text/javascript">		 
+			    jQuery(document).ready(function(){
+			        formatMoney();
+			        $(".data").mask("99/99/9999");
+			 	});
+			 	
+
+			 	function formatMoney(){
+			 		jQuery('.dinheiro').priceFormat({
+			            prefix: 'R$ ',
+				    	centsSeparator: ',',
+					    thousandsSeparator: '.',
+					   	centsLimit: 2,
+					    limit: 14,
+				    	allowNegative: true
+					});
+				}
+			</script>
+			<p:ajax event="close" listener="#{lancamentoController.cancelar()}"
+				process="@this" />
+			<h:form prependId="false" id="frmReceitaNew">
+				<p:blockUI block="frmReceitaNew" id="recRefresh">
+					<p:graphicImage value="#{bundle['app.resources.img.loader']}" />Aguarde...
+			</p:blockUI>
+				<p:messages id="msgReceitaNew" />
+				<p:panel header="Receita" id="pnlReceita">
+
+					<h:panelGrid columnClasses="column" columns="2" border="0"
+						cellpadding="4">
+
+						<h:outputLabel
+							value="#{bundle['lancamento.label.data.lancamento']}"
+							for="dataLancamento" />
+						<!--  TODO: Não ta funcinando esse locale -->
+						<p:calendar id="dataLancamento"
+							value="#{lancamentoController.lancamento.dataLancamento}"
+							label="#{bundle['lancamento.label.data.lancamento']}" size="10"
+							maxlength="12" pattern="dd/MM/yyyy" type="date"
+							locale="#{usuarioSessionController.usuario.locale.language}"
+							navigator="true" styleClass="data" />
+						<h:outputLabel value="#{bundle['lancamento.label.receber']}"
+							for="favorecido" />
+						<p:autoComplete value="#{lancamentoController.lancamento.pessoa}"
+							id="favorecido"
+							completeMethod="#{lancamentoController.completePessoaByNome}"
+							var="_pessoa" itemValue="#{_pessoa}" itemLabel="#{_pessoa.nome}"
+							forceSelection="true" minQueryLength="4" maxResults="8" size="40"
+							label="#{bundle['lancamento.label.favorecido']}"
+							converter="#{pessoaConverter}">
+							<p:column>
+							#{_pessoa.nome}
+						</p:column>
+							<p:column>
+							#{_pessoa.documento}
+						</p:column>
+						</p:autoComplete>
+						<h:outputLabel value="#{bundle['lancamento.label.numero']}"
+							for="numero" />
+						<p:inputText id="numero" size="14"
+							value="#{lancamentoController.lancamento.numero}"
+							label="#{bundle['lancamento.label.numero']}" />
+
+						<h:outputLabel value="#{bundle['lancamento.label.valor']}"
+							for="valor" />
+						<p:inputText id="valor"
+							value="#{lancamentoController.lancamento.valor}" size="20"
+							maxlength="16" max="16" converter="#{dinheiroConverter}"
+							styleClass="dinheiro" />
+
+						<h:outputLabel value="#{bundle['lancamento.label.historico']}"
+							for="historico" />
+						<p:inputText id="historico" size="40" maxlength="250"
+							value="#{lancamentoController.lancamento.historico}"
+							label="#{bundle['lancamento.label.historico']}" />
+					</h:panelGrid>
+				</p:panel>
+				<p:panel header="Contabil" id="pnlContabil">
+					<p:selectBooleanCheckbox
+						value="#{lancamentoController.dividirValor}"
+						label="Dividir o valor em parcelas"
+						itemLabel="Dividir o valor em parcelas">
+						<p:ajax update="pnlContabil" oncomplete="formatMoney()" />
+					</p:selectBooleanCheckbox>
+					<p:outputPanel rendered="#{!lancamentoController.dividirValor}"
+						id="pnlGridContabil">
+						<h:panelGrid columnClasses="column" columns="4" border="0"
+							cellpadding="4">
+							<h:outputLabel value="#{bundle['plano.de.contas.label.codigo']}"
+								for="planoDeContasCodigo" />
+							<p:autoComplete
+								value="#{lancamentoController.lancamento.planoDeContas}"
+								id="planoDeContasCodigo"
+								completeMethod="#{lancamentoController.completePlanoDeContasByCodigo}"
+								var="plano" itemLabel="#{plano.codigo}" itemValue="#{plano}"
+								converter="#{entityConverter}" forceSelection="true"
+								minQueryLength="1" maxResults="12" size="10"
+								label="#{bundle['plano.de.contas.label.codigo']}">
+								<p:column>
+								#{plano.codigo} - #{plano.nome}
+							</p:column>
+							</p:autoComplete>
+
+							<h:outputLabel value="#{bundle['plano.de.contas.label.nome']}"
+								for="planoDeContasNome" />
+							<!-- TODO: Tem que ver se tem como listar os planos de contas por categoria. -->
+							<p:autoComplete
+								value="#{lancamentoController.lancamento.planoDeContas}"
+								id="planoDeContasNome"
+								completeMethod="#{lancamentoControllerController.findPlanoDeContasByNome}"
+								var="plano" itemLabel="#{plano.nome}" itemValue="#{plano}"
+								converter="#{entityConverter}" forceSelection="true"
+								minQueryLength="3" maxResults="12" size="40"
+								label="#{bundle['plano.de.contas.label.nome']}">
+								<p:column>
+								#{plano.codigo} - #{plano.nome}
+							</p:column>
+							</p:autoComplete>
+							<h:outputLabel value="#{bundle['centro.de.custos.label.codigo']}"
+								for="centroDeCustosCodigo" />
+							<p:autoComplete
+								value="#{lancamentoController.lancamento.planoDeContas}"
+								id="centroDeCustosCodigo"
+								completeMethod="#{centroDeCustosController.findPlanoDeContasByCodigo}"
+								var="centro" itemLabel="#{centro.codigo}" itemValue="#{centro}"
+								converter="#{entityConverter}" forceSelection="true"
+								minQueryLength="2" maxResults="12" size="10"
+								label="#{bundle['centro.de.custos.label.codigo']}">
+								<p:column>
+							#{centro.codigo} - #{centro.nome}
+						</p:column>
+							</p:autoComplete>
+
+							<h:outputLabel value="#{bundle['centro.de.custos.label.nome']}"
+								for="centroDeCustosNome" />
+							<p:autoComplete
+								value="#{lancamentoController.lancamento.centroDeCustos}"
+								id="centroDeCustosNome"
+								completeMethod="#{centroDeCustosControlcompleteCentroDeCustosByNomeNome}"
+								var="centro" itemLabel="#{centro.nome}" itemValue="#{centro}"
+								converter="#{entityConverter}" forceSelection="true"
+								minQueryLength="3" maxResults="12" size="40"
+								label="#{bundle['centro.de.custos.label.nome']}">
+								<p:column>
+								#{centro.codigo} - #{centro.nome}
+							</p:column>
+							</p:autoComplete>
+						</h:panelGrid>
+					</p:outputPanel>
+					<p:outputPanel id="dtContabil"
+						rendered="#{lancamentoController.dividirValor}">
+
+						<h:panelGrid columnClasses="column" columns="4" border="0"
+							cellpadding="4">
+							<h:outputLabel value="#{bundle['plano.de.contas.label.codigo']}"
+								for="_planoDeContasCodigo" />
+							<p:autoComplete
+								value="#{lancamentoController.parcela.planoDeContas}"
+								id="_planoDeContasCodigo"
+								completeMethod="#{lancamentoController.completePlanoDeContasByCodigo}"
+								var="plano" itemLabel="#{plano.codigo}" itemValue="#{plano}"
+								converter="#{entityConverter}" forceSelection="true"
+								minQueryLength="1" maxResults="12" size="14"
+								label="#{bundle['plano.de.contas.label.codigo']}">
+								<p:column>
+								#{plano.codigo} - #{plano.nome}
+							</p:column>
+								<p:ajax event="itemSelect" update="dtContabil" />
+							</p:autoComplete>
+
+							<h:outputLabel value="#{bundle['plano.de.contas.label.nome']}"
+								for="_planoDeContasNome" />
+							<!-- TODO: Tem que ver se tem como listar os planos de contas por categoria. -->
+							<p:autoComplete
+								value="#{lancamentoController.parcela.planoDeContas}"
+								id="_planoDeContasNome"
+								completeMethod="#{lancamentoController.completePlanoDeContasByNome}"
+								var="plano" itemLabel="#{plano.nome}" itemValue="#{plano}"
+								converter="#{entityConverter}" forceSelection="true"
+								minQueryLength="3" maxResults="12" size="40"
+								label="#{bundle['plano.de.contas.label.nome']}">
+								<p:column>
+								#{plano.codigo} - #{plano.nome}
+							</p:column>
+								<p:ajax event="itemSelect" update="dtContabil" />
+							</p:autoComplete>
+							<h:outputLabel value="#{bundle['centro.de.custos.label.codigo']}"
+								for="_centroDeCustosCodigo" />
+							<p:autoComplete
+								value="#{lancamentoController.parcela.centroDeCustos}"
+								id="_centroDeCustosCodigo"
+								completeMethod="#{centroDeCustocompleteCentroDeCustosByCodigostosByCodigo}"
+								var="centro" itemLabel="#{centro.codigo}" itemValue="#{centro}"
+								converter="#{entityConverter}" forceSelection="true"
+								minQueryLength="2" maxResults="12" size="14"
+								label="#{bundle['centro.de.custos.label.codigo']}">
+								<p:column>
+								#{centro.codigo} - #{centro.nome}
+							</p:column>
+								<p:ajax event="itemSelect" update="dtContabil" />
+							</p:autoComplete>
+
+							<h:outputLabel value="#{bundle['centro.de.custos.label.nome']}"
+								for="_centroDeCustosNome" />
+							<p:autoComplete
+								value="#{lancamentoController.parcela.centroDeCustos}"
+								id="_centroDeCustosNome"
+								completeMethod="#{centroDeCcompleteCentroDeCustosByNomeroDeCustosByNome}"
+								var="centro" itemLabel="#{centro.nome}" itemValue="#{centro}"
+								converter="#{entityConverter}" forceSelection="true"
+								minQueryLength="3" maxResults="12" size="40"
+								label="#{bundle['centro.de.custos.label.nome']}">
+								<p:column>
+								#{centro.codigo} - #{centro.nome}
+							</p:column>
+								<p:ajax event="itemSelect" update="dtContabil" />
+							</p:autoComplete>
+							<h:outputLabel value="#{bundle['lancamento.label.valor']}"
+								for="_valor" />
+							<p:inputText id="_valor" size="20"
+								value="#{lancamentoController.parcela.valor}"
+								converter="#{dinheiroConverter}" styleClass="dinheiro"
+								maxlength="16" max="16" />
+						</h:panelGrid>
+
+						<p:commandButton value="Adicionar Parcela"
+							action="#{lancamentoController.adicionarParcela}"
+							id="btmAdicionarParcela" update="dtContabil msgReceitaNew"
+							icon="ui-icon-circle-plus" oncomplete="formatMoney()">
+							<f:param
+								name="#{not empty javax.enterprise.context.conversation.id?'cid':''}"
+								value="#{javax.enterprise.context.conversation.id}" />
+						</p:commandButton>
+
+						<p:dataTable var="parcela"
+							value="#{lancamentoController.lancamento.parcelas}"
+							id="dtParcelas">
+							<f:facet name="header">
+							Parcelas
+						</f:facet>
+							<p:column headerText="Plano de Contas">  
+            				#{parcela.planoDeContas.codigo} -   #{parcela.planoDeContas.nome}
+        				</p:column>
+
+							<p:column headerText="Centro de Custos">  
+	            			#{parcela.centroDeCustos.codigo} -   #{parcela.centroDeCustos.nome}
+    	    			</p:column>
+
+							<p:column headerText="Observação">  
+	            			#{parcela.historico}  
+    	    			</p:column>
+
+							<p:column headerText="Valor">
+								<h:outputText value="#{parcela.valor}"
+									converter="#{dinheiroConverter}" />
+							</p:column>
+							<p:column headerText="Excluir">
+								<p:commandButton icon="ui-icon-trash" id="btnExcluir"
+									title="Excluir"></p:commandButton>
+							</p:column>
+							<p:columnGroup type="footer">
+								<p:row>
+									<p:column colspan="3" footerText="Soma da Divisão:"
+										style="text-align:right" />
+									<p:column colspan="4">
+										<h:outputLabel value="#{lancamentoController.somaParcelas}"
+											converter="#{dinheiroConverter}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="3" footerText="Restante:"
+										style="text-align:right" />
+									<p:column>#{lancamentoController.valorRestante}</p:column>
+								</p:row>
+							</p:columnGroup>
+
+						</p:dataTable>
+					</p:outputPanel>
+				</p:panel>
+				<center>
+					<h:panelGroup layout="block">
+						<p:commandButton actionListener="#{lancamentoController.salvar}"
+							value="#{bundle['button.salvar']}" id="btnSalvarReceita"
+							update="frmReceitaNew @parent">
+							<f:param
+								name="#{not empty javax.enterprise.context.conversation.id?'cid':''}"
+								value="#{javax.enterprise.context.conversation.id}" />
+						</p:commandButton>
+						<p:commandButton id="btnCancelarReceita"
+							value="#{bundle['button.cancelar']}"
+							actionListener="#{lancamentoController.cancelar}" process="@this" />
+					</h:panelGroup>
+				</center>
+			</h:form>
+		</p:dialog>
+	</f:view>
+</ui:composition>
+</html>

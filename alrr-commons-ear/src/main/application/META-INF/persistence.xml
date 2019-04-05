@@ -36,9 +36,10 @@
 		<class>br.leg.rr.al.commons.jpa.Profissao</class>
 		<class>br.leg.rr.al.commons.jpa.Telefone</class>
 
+		<class>br.leg.rr.al.core.jpa.BaseEntity</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<validation-mode>AUTO</validation-mode>
-		<jar-file>lib/alrr-core-utils-1.0.0-SNAPSHOT.jar</jar-file>
+		<!-- <jar-file>lib/alrr-core-utils-1.0.0-SNAPSHOT.jar</jar-file> -->
 		<!-- <jar-file>lib/alrr-localidade-jpa-1.0.0-SNAPSHOT.jar</jar-file> -->
 
 

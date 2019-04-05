@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	lang="#{sistemaController.sistema.locale.language}">
+
+<ui:composition>
+	<f:view locale="#{sistemaController.sistema.locale}"
+		contentType="text/html">
+
+		<p:dialog widgetVar="dlgContaBancariaNew" header="Nova Conta Bancaria"
+			width="800" id="_dlgContaBancariaNew" appendToBody="true"
+			modal="true">
+			<p:ajax event="close" listener="#{contaBancariaController.cancelar}"
+				process="@this" />
+			<h:form prependId="false" id="frmContaBancariaNew">
+				<p:blockUI block="frmContaBancariaNew" id="refContaBancariaNew">
+					<p:graphicImage value="#{bundle['app.resources.img.loader']}" />Aguarde...
+				</p:blockUI>
+				<p:messages id="msgContaBancariaNew" closable="true" />
+				<p:panel header="Banco e Agência" id="pnlDadosBancarios">
+					<h:panelGrid columnClasses="column" columns="2" border="0"
+						cellpadding="4">
+						<!-- TODO: vamos usar só o nome do banco e o numero da agencia. -->
+						<!-- 
+						<h:outputLabel value="#{bundle['banco.label.codigo']}"
+							for="_bancoCodigo" />
+						<p:inputText id="_bancoCodigo"
+							value="#{contaBancariaController.bancoCodigo}"
+							label="#{bundle['banco.label.codigo']}" size="8" maxlength="5"
+							onblur="refContaBancariaNew.show()" required="true">
+							<p:ajax process="@this"
+								listener="#{contaBancariaController.completeBancoByCodigo}"
+								update="msgContaBancariaNew pnlDadosBancarios" />
+						</p:inputText>
+						-->
+
+						<h:outputLabel value="#{bundle['banco.label.nome']}"
+							for="_bancoNome" />
+						<p:autoComplete value="#{contaBancariaController.banco}"
+							id="_bancoNome"
+							completeMethod="#{contaBancariaController.completeBancoByNome}"
+							var="banco" itemLabel="#{banco.nome}" itemValue="#{banco}"
+							converter="#{entityConverter}" forceSelection="true"
+							minQueryLength="3" maxResults="12"
+							label="#{bundle['banco.label.nome']}" size="40">
+							<p:column>
+								#{banco.codigo} - #{banco.nome}
+							</p:column>
+							<p:ajax event="itemSelect"
+								listener="#{contaBancariaController.handleSelectBanco}" />
+						</p:autoComplete>
+
+						<h:outputLabel value="#{bundle['agencia.label.numero']}"
+							for="_agenciaNumero" />
+						<p:inputText
+							value="#{contaBancariaController.agencia.numeroAgencia}"
+							id="_agenciaNumero" size="6" maxlength="5" required="true">
+							<p:ajax process="@parent"
+								listener="#{contaBancariaController.completeAgenciaByNumero()}"
+								update="msgContaBancariaNew pnlDadosBancarios" />
+						</p:inputText>
+						<h:outputLabel value="#{bundle['agencia.label.nome']}"
+							for="_agenciaNome" />
+						<h:outputText
+							value="#{contaBancariaController.contaBancaria.agencia.nome}"
+							id="_agenciaNome" />
+
+						<h:outputLabel value="#{bundle['agencia.label.telefone']}"
+							for="_agenciaNome" />
+						<h:outputText
+							value="(#{contaBancariaController.contaBancaria.agencia.localidade.ddd}) #{contaBancariaController.contaBancaria.agencia.telefone}"
+							id="_agenciaTelefone" />
+
+						<h:outputLabel value="#{bundle['conta.bancaria.label.gerente']}"
+							for="_gerenteConta" />
+						<p:inputText
+							value="#{contaBancariaController.contaBancaria.nomeGerente}"
+							id="_gerenteConta" size="40" />
+						<!-- TODO: Fazer a conversão para o campo celular e tirar a formatação. Já existe um converter para telefone porém é para a entidae pessoatelefone. tem que acertar essas coisas. -->
+						<h:outputLabel value="#{bundle['conta.bancaria.label.celular']}"
+							for="celular" />
+						<p:inputMask id="celular"
+							value="#{contaBancariaController.contaBancaria.celularGerente}"
+							mask="(99) 9999-9999" size="12"
+							label="#{bundle['conta.bancaria.label.celular']}" />
+					</h:panelGrid>
+				</p:panel>
+				<p:panel header="Informações da Conta" id="pnlDadosConta">
+					<h:panelGrid columnClasses="column" columns="4" border="0"
+						cellpadding="4">
+						<h:outputLabel value="#{bundle['conta.label.nome']}"
+							for="_contaNome" />
+						<p:inputText value="#{contaBancariaController.contaBancaria.nome}"
+							required="true" size="40" id="_contaNome" />
+						<p:column />
+						<p:column />
+
+
+						<h:outputLabel value="#{bundle['conta.label.numero']}"
+							for="_contaNumero" />
+						<p:outputPanel>
+							<p:inputText
+								value="#{contaBancariaController.contaBancaria.numero}"
+								required="true" size="6" id="_contaNumero" maxlength="8" />
+							<h:outputLabel value="#{bundle['conta.label.dv']}" for="_contaDV" />
+							<p:inputText value="#{contaBancariaController.contaBancaria.dv}"
+								required="true" size="3" id="_contaDV" maxlength="3" />
+						</p:outputPanel>
+						<h:outputLabel value="#{bundle['conta.label.data.abertura']}"
+							for="_dataAbertura" />
+						<p:inputMask id="_dataAbertura"
+							value="#{contaBancariaController.contaBancaria.dataAberturaConta}"
+							mask="99/99/9999" label="#{bundle['conta.label.data.abertura']}"
+							size="10" maxlength="12" type="date">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+						</p:inputMask>
+						<h:outputLabel value="#{bundle['conta.label.limite.credito']}"
+							for="_limite" />
+						<p:inputText id="_limite"
+							value="#{contaBancariaController.contaBancaria.limiteCredito}"
+							size="20" maxlength="16" max="16"
+							converter="#{dinheiroConverter}" styleClass="dinheiro" />
+						<h:outputLabel
+							value="#{bundle['conta.label.data.vencimento.limite']}"
+							for="_dataVencimentoLimite" />
+						<p:inputMask id="_dataVencimentoLimite"
+							value="#{contaBancariaController.contaBancaria.dataVencimentoLimite}"
+							mask="99/99/9999"
+							label="#{bundle['conta.label.data.vencimento.limite']}" size="10"
+							maxlength="12" type="date">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+						</p:inputMask>
+						<h:outputLabel value="#{bundle['conta.label.saldo.inicial']}"
+							for="_saldoInicial" />
+						<p:inputText id="_saldoInicial"
+							value="#{contaBancariaController.contaBancaria.saldoInicial}"
+							size="20" maxlength="16" max="16"
+							converter="#{dinheiroConverter}" styleClass="dinheiro" />
+						<p:column />
+						<p:column />
+						<h:outputLabel value="#{bundle['conta.label.situacao']}"
+							for="_contaSituacao" />
+						<p:selectOneRadio
+							value="#{contaBancariaController.contaBancaria.situacao}"
+							id="_contaSituacao">
+							<f:selectItems value="#{enumFactory.contasStatus}" var="sit"
+								itemValue="#{sit}" itemLabel="#{enum[sit.label]}" />
+						</p:selectOneRadio>
+						moeda
+					
+					</h:panelGrid>
+				</p:panel>
+				<center>
+					<h:panelGroup layout="block">
+						<p:commandButton
+							actionListener="#{contaBancariaController.salvar}"
+							value="#{bundle['button.salvar']}" id="btnSalvarContaBancaria"
+							update="msgContaBancariaNew @parent">
+							<f:param
+								name="#{not empty javax.enterprise.context.conversation.id?'cid':''}"
+								value="#{javax.enterprise.context.conversation.id}" />
+						</p:commandButton>
+						<p:commandButton id="btnCancelarContaBancaria"
+							value="#{bundle['button.cancelar']}"
+							actionListener="#{contaBancariaController.cancelar()}"
+							process="@this" />
+					</h:panelGroup>
+				</center>
+			</h:form>
+		</p:dialog>
+	</f:view>
+</ui:composition>
+</html>

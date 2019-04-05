@@ -9,10 +9,6 @@
 			<from-outcome>pagina-inicial</from-outcome>
 			<to-view-id>/pagina-inicial.xhtml</to-view-id>
 		</navigation-case>
-		<navigation-case>
-			<from-outcome>pg-feriados</from-outcome>
-			<to-view-id>/pages/commons/pg-feriados.xhtml</to-view-id>
-		</navigation-case>
 	</navigation-rule>
 	<application>
 		<action-listener>org.primefaces.application.DialogActionListener</action-listener>

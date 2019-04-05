@@ -21,10 +21,10 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/facelets/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:alcore="http://al.rr.leg.br/facelets/core"
-	xmlns:alloc="http://al.rr.leg.br/facelets/localidade"
+	xmlns:alloc="http://al.rr.leg.br/tags/localidade"
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
 
@@ -70,7 +70,7 @@
 		<!-- UF: TIPO FERIADO != NACIONAL -->
 		<al:campo-detalhe label="Uf"
 			rendered="#{feriadoController.entity.tipo ne 'NACIONAL'}"
-			value="#{feriadoController.entity.uf.label}" />
+			value="#{feriadoController.entity.uf.nome}" />
 
 	</ui:define>
 </ui:composition>

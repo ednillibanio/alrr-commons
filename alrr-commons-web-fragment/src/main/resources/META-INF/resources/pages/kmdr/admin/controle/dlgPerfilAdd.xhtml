@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:dialog rendered="#{usuarioController.isUserInRole('addPerfil')}"
+		header="Adicionar Perfil" widgetVar="dlgPerfilAdd" modal="true"
+		width="340" id="_dlgPerfilAdd">
+		<h:form id="frmPerfilSearch" prependId="false">
+
+			<p:panel id="pnlFiltro">
+				<p:messages id="msgsPerfil" />
+				<h:panelGrid columns="2" border="0" columnClasses="column"
+					cellpadding="6">
+					<h:outputLabel value="#{bundle['grupo.label.nome']}" />
+					<p:selectOneMenu id="selGrupo" value="#{usuarioController.grupo}"
+						required="true" converter="#{entityConverter}"
+						label="#{bundle['grupo.label.nome']}">
+						<f:selectItem itemLabel="Selecione um grupo" itemValue="" />
+						<f:selectItems value="#{usuarioController.grupos}" var="_grupo"
+							itemLabel="#{_grupo.nome}" />
+						<p:ajax update="selPerfil frmPerfilSearch"
+							listener="#{usuarioController.findPerfis}" event="change" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="#{bundle['perfil.label.nome']}" />
+					<p:selectOneMenu id="selPerfil" value="#{usuarioController.perfil}"
+						required="true" converter="#{entityConverter}"
+						label="#{bundle['perfil.label.nome']}">
+						<f:selectItem itemLabel="Selecione um perfil" />
+						<f:selectItems value="#{usuarioController.perfis}" var="_perfil"
+							itemLabel="#{_perfil.nome}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<p:spacer height="5" />
+			</p:panel>
+			<p:spacer height="3"></p:spacer>
+			<center>
+				<p:commandButton id="confirmar" value="Confirmar"
+					update="msgsPerfil frmPerfilSearch selPerfil"
+					actionListener="#{usuarioController.addPerfil}">
+				</p:commandButton>
+				<p:commandButton id="cancel" value="Cancelar"
+					oncomplete="dlgPerfilAdd.hide()" />
+			</center>
+
+		</h:form>
+	</p:dialog>
+</ui:composition>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{sistemaController.sistema.locale}">
+	<ui:include src="/resources/components/head.xhtml" />
+
+	<h:body>
+		<ui:include src="/resources/components/menu.xhtml" />
+		<h1 class="title">#{bundle['header.configuracao.sistema']}</h1>
+		<p:separator />
+		<p:messages id="msgs" />
+		<h:form prependId="false" id="frmSistemaConfig" style="width:800px">
+
+			<p:blockUI block="frmSistemaConfig" id="refresh">
+				<p:graphicImage value="#{bundle['app.resources.img.loader']}" />Aguarde...
+			</p:blockUI>
+
+			<p:panel header="Configuração Geral do Sistema">
+				<h:panelGrid columns="2" cellpadding="4">
+					<h:outputLabel value="#{bundle['sistema.label.tema']}" for="tema" />
+					<p:selectOneMenu value="#{sistemaController.sistema.theme}"
+						effect="fade" var="p" style="width:160px" id="tema">
+						<f:selectItems value="#{primeFacesThemes.themes}" var="theme"
+							itemValue="#{theme}" />
+						<p:column>
+							<p:graphicImage
+								value="../resources/img/primefaces/#{theme.nome}.png" width="40"
+								height="50" />
+						</p:column>
+						<p:column>  
+                		#{theme.nome} 
+            		</p:column>
+					</p:selectOneMenu>
+
+					<h:outputLabel value="#{bundle['usuario.label.idioma']}"
+						for="idioma" />
+					<p:selectOneMenu value="#{sistemaController.sistema.locale}"
+						style="width:160px" id="idioma">
+						<f:selectItems value="#{enumFactory.idiomasSistema}" var="_idioma"
+							itemValue="#{_idioma}" itemLabel="#{enum[_idioma.label]}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="#{bundle['sistema.label.localidade']}"
+						for="localidade" />
+					<p:autoComplete
+						value="#{sistemaController.sistema.localidadePadrao}"
+						id="localidade"
+						completeMethod="#{sistemaController.findLocalidade}" var="loc"
+						itemLabel="#{loc.nome} - #{loc.siglaUf}" itemValue="#{loc}"
+						converter="#{entityConverter}" forceSelection="true"
+						minQueryLength="3" maxResults="8" size="40"
+						label="#{bundle['sistema.label.localidade']}" required="true">
+						<p:column>
+							#{loc.nome} - #{loc.siglaUf}
+						</p:column>
+					</p:autoComplete>
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Configuração de Acesso do Usuário">
+				<p:panelGrid columnClasses="column">
+					<f:facet name="header">
+						<p:row>
+							<p:column style="width:250px">Valor</p:column>
+							<p:column>Descrição</p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column>
+							<p:selectBooleanCheckbox
+								itemLabel="#{bundle['sistema.seguranca.chk.senha.forte']}"
+								value="#{sistemaController.seguranca.senhaForte}" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{bundle['sistema.seguranca.prompt.senha.forte']}"
+								escape="false" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:selectBooleanCheckbox
+								itemLabel="#{bundle['sistema.seguranca.chk.troca.senha.primeiro.acesso']}"
+								value="#{sistemaController.seguranca.trocaSenhaPrimeiroAcesso}" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{bundle['sistema.seguranca.prompt.troca.senha.primeiro.acesso']}"
+								escape="false" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:selectBooleanCheckbox
+								itemLabel="#{bundle['sistema.seguranca.chk.permite.mesma.senha']}"
+								value="#{sistemaController.seguranca.permiteMesmaSenha}" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{bundle['sistema.seguranca.prompt.permite.mesma.senha']}"
+								escape="false" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:selectBooleanCheckbox
+								itemLabel="#{bundle['sistema.seguranca.chk.bloquear.acesso']}"
+								value="#{sistemaController.seguranca.bloquearSenhaInvalida}" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{bundle['sistema.seguranca.prompt.bloquear.acesso']}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:selectBooleanCheckbox
+								itemLabel="#{bundle['sistema.seguranca.chk.expira.senha']}"
+								value="#{sistemaController.seguranca.expiraSenha}">
+								<p:ajax update="pnlPeriodoExpiraSenha" immediate="false" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{bundle['sistema.seguranca.prompt.expira.senha']}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText
+								value="#{bundle['sistema.seguranca.label.periodo']}" />
+						</p:column>
+						<p:column>
+							<h:panelGroup id="pnlPeriodoExpiraSenha">
+								<p:selectOneRadio
+									value="#{sistemaController.seguranca.periodoExpiraSenha}"
+									id="periodoExpiraSenha"
+									disabled="#{!sistemaController.seguranca.expiraSenha}"
+									required="#{sistemaController.seguranca.expiraSenha}"
+									label="#{bundle['sistema.seguranca.label.periodo']}">
+									<f:selectItems value="#{enumFactory.periodoExpiraSenha}"
+										var="per" itemValue="#{per}" itemLabel="#{per}" />
+								</p:selectOneRadio>
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+
+			<center>
+				<h:panelGroup layout="block">
+					<p:commandButton action="#{sistemaController.salvar}"
+						value="#{bundle['button.salvar']}" id="cbtnSalvar" type="submit"
+						onclick="refresh.show();" update="frmSistemaConfig">
+					</p:commandButton>
+					<!-- TODO: Fazer funcionar o Voltar. -->
+					<p:commandButton action="#{sistemaController.cancelar}"
+						value="#{bundle['button.cancelar']}" id="cbtnCancelar"
+						immediate="true">
+					</p:commandButton>
+				</h:panelGroup>
+			</center>
+
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

@@ -88,5 +88,10 @@
 			<artifactId>alrr-localidade-web-fragment</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.3_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

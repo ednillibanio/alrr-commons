@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	lang="#{sistemaController.sistema.locale.language}">
+<f:view locale="#{sistemaController.sistema.locale.language}"
+	contentType="text/html">
+	<ui:include src="/resources/components/head.xhtml" />
+
+	<h:body>
+		<ui:include src="/resources/components/menu.xhtml" />
+		<h1>Controle de Contas de Movimentação</h1>
+		<p:separator />
+
+		<p:layout style="height:500px;">
+			<p:layoutUnit position="west" collapsible="true"
+				header="Contas de Movimentação" minSize="200">
+				<h:form prependId="false" id="frmContaDeMovimentacao">
+
+
+					<p:treeTable value="#{contasAReceberController.root}" var="conta"
+						selection="#{contasAReceberController.contaSelecionada}"
+						selectionMode="single">
+						<p:ajax event="select"
+							listener="#{contasAReceberController.onNodeSelect}" />
+						<f:facet name="header">  
+           					Contas  
+				        </f:facet>
+
+						<p:column style="width:150px">
+							<f:facet name="header">  
+				                Name  
+				            </f:facet>
+							<h:outputText value="#{conta.nome}" />
+						</p:column>
+
+						<p:column style="width:100px">
+							<f:facet name="header">  
+                				Saldo  
+            				</f:facet>
+							<h:outputText value="#{conta.saldoInicial}"
+								converter="#{dinheiroConverter}" />
+						</p:column>
+
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column footerText="Saldo Disponível: "
+									style="text-align:right" />
+								<p:column footerText="11.233342,00" />
+							</p:row>
+						</p:columnGroup>
+					</p:treeTable>
+
+					<p:panelMenu>
+						<p:submenu label="Menu">
+							<p:menuitem value="Cadastrar Conta Bancaria"
+								actionListener="#{contaBancariaController.novo}"
+								icon="ui-icon-circle-plus" update=":_dlgContaBancariaNew" />
+							<p:menuitem value="Cadastrar Cartão de Crédito"
+								actionListener="#{contasAReceberController.novoCartaoDeCredito}"
+								icon="ui-icon-circle-plus" />
+							<p:menuitem value="Cadastrar Caixa"
+								actionListener="#{contasAReceberController.novoCartaoDeCredito}"
+								icon="ui-icon-circle-plus" />
+						</p:submenu>
+					</p:panelMenu>
+
+
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="center" header="Contas a Receber">
+				<p:tabView id="tabView">
+					<ui:include src="tabReceitas.xhtml" />
+					<p:tab title="Despesas" id="tabDespesas">
+						<p:tabMenu>
+						</p:tabMenu>
+						<h:dataTable></h:dataTable>
+
+					</p:tab>
+					<p:tab title="Contas a Receber">
+						<p:tabMenu>
+						</p:tabMenu>
+						<h:dataTable></h:dataTable>
+					</p:tab>
+					<p:tab title="Contas a Pagar">
+						<p:tabMenu>
+						</p:tabMenu>
+						<h:dataTable></h:dataTable>
+
+					</p:tab>
+
+				</p:tabView>
+			</p:layoutUnit>
+		</p:layout>
+		<ui:include src="dlgContaBancariaNew.xhtml" />
+	</h:body>
+</f:view>
+</html>

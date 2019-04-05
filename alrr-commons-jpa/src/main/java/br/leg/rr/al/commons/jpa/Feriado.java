@@ -3,14 +3,11 @@ package br.leg.rr.al.commons.jpa;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import br.leg.rr.al.commons.domain.FeriadoType;
@@ -20,8 +17,8 @@ import br.leg.rr.al.commons.jpa.validators.ValidDia;
 import br.leg.rr.al.core.domain.Mes;
 import br.leg.rr.al.core.domain.MesConverter;
 import br.leg.rr.al.core.jpa.Dominio;
-import br.leg.rr.al.localidade.domain.UfType;
 import br.leg.rr.al.localidade.jpa.Municipio;
+import br.leg.rr.al.localidade.jpa.UnidadeFederativa;
 
 /**
  * Classe persistente que representa a tabela "feriado".
@@ -31,10 +28,7 @@ import br.leg.rr.al.localidade.jpa.Municipio;
  * @since 1.0.0
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "nome", "dia", "mes",
-		"tipo_feriado" }, name = "feriado_uqk1"))
-// TODO: check gera, mas só pra um. Não consegui achar pra colocar em todos.
-// Descobrir como que faz depois.
+@Table
 @ValidFeriado
 public class Feriado extends Dominio {
 
@@ -58,16 +52,10 @@ public class Feriado extends Dominio {
 	@Column(name = "tipo_feriado", length = 1, nullable = false)
 	private FeriadoType tipo;
 
-	// @Null(groups = FeriadoNacional.class, message = "Uf deve ser vazio para
-	// feriado igual a Nacional.")
-	// @NotNull(groups = FeriadoEstadual.class, message = "Uf: campo obrigatório
-	// bean.")
-	@Enumerated(EnumType.STRING)
-	@Column(name = "uf", length = 2, nullable = true)
-	private UfType uf = null;
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "uf_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "uf_fk"), nullable = true)
+	private UnidadeFederativa uf = null;
 
-	// @NotNull(groups = { FeriadoMunicipal.class, FeriadoEstadual.class }, message
-	// = "Municipio: campo obrigatório.")
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "municipio_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "municipio_fk"), nullable = true)
 	private Municipio municipio = null;
@@ -166,7 +154,7 @@ public class Feriado extends Dominio {
 	 *         de Municipal, retorna a uf da municipio (município). Caso contrário,
 	 *         retorna <code>null</code>.
 	 */
-	public UfType getUf() {
+	public UnidadeFederativa getUf() {
 		if (uf != null) {
 			return uf;
 		} else if (municipio != null) {
@@ -181,7 +169,7 @@ public class Feriado extends Dominio {
 	 * 
 	 * @param uf
 	 */
-	public void setUf(UfType uf) {
+	public void setUf(UnidadeFederativa uf) {
 		this.uf = uf;
 	}
 

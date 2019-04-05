@@ -2,8 +2,7 @@ package br.leg.rr.al.commons.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -21,8 +20,7 @@ import br.leg.rr.al.core.jpa.BaseEntityStatus;
  *         Junior</a>
  * @since 1.0.0
  */
-@Entity
-@Table
+@MappedSuperclass
 public class Telefone extends BaseEntityStatus<Integer> {
 
 	/**
@@ -37,7 +35,7 @@ public class Telefone extends BaseEntityStatus<Integer> {
 	 */
 	@Convert(converter = TelefoneTypeConverter.class)
 	@Column(name = "tipo_telefone", length = 1)
-	@NotNull(message = "Preenchimento obrigatório do campo tipo.")
+	@NotNull(message = "Tipo: campo obrigatório.")
 	private TelefoneType tipo;
 
 	/**
@@ -50,7 +48,7 @@ public class Telefone extends BaseEntityStatus<Integer> {
 	 * Número do telefone sem formatação.
 	 */
 	@Column(nullable = false, length = 9)
-	@NotNull(message = "Preenchimento obrigatório do campo número.")
+	@NotNull(message = "Número: campo obrigatório.")
 	private String numero;
 
 	public Telefone() {

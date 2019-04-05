@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{sistemaController.sistema.locale}">
+	<ui:include src="/resources/components/head.xhtml" />
+
+	<h:body>
+		<ui:include src="/resources/components/menu.xhtml" />
+		<h:form prependId="false" id="frmPreferencias">
+
+			<h1 class="title">#{bundle['header.minhas.preferencias']}</h1>
+			<p:separator />
+			<p:messages id="msgs" escape="false" closable="true" />
+			<p:blockUI block="frmPreferencias" id="refresh">
+				<p:graphicImage value="#{bundle['app.resources.img.loader']}" />Aguarde...
+			</p:blockUI>
+			<p:panel header="Dados Pessoais" id="pnlDadosPessoais">
+				<h:panelGrid columns="2" columnClasses="column" cellpadding="4">
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.cpf']}"
+						for="cpf" />
+					<p:outputPanel>
+						<p:inputMask id="cpf" value="#{usuarioSessionController.cpf}"
+							label="#{bundle['pessoa.fisica.label.cpf']}"
+							converter="#{cpfConverter}" size="14" maxlength="11"
+							onblur="refresh.show()" mask="999.999.999-99"
+							disabled="#{usuarioSessionController.pessoaFisica.cpf !=null}">
+							<p:ajax process="@this"
+								listener="#{usuarioSessionController.findPessoaByCpf}"
+								update="pnlDadosPessoais msgs" />
+						</p:inputMask>
+					</p:outputPanel>
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.nome']}"
+						for="nome" escape="false" />
+					<p:inputText value="#{usuarioSessionController.pessoaFisica.nome}"
+						required="true" size="40" maxlength="250" id="nome" />
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.sexo']}"
+						for="sexo" escape="false" />
+					<p:selectOneRadio
+						value="#{usuarioSessionController.pessoaFisica.sexo}" id="sexo"
+						label="#{bundle['pessoa.fisica.label.sexo']}">
+						<f:selectItems value="#{enumFactory.sexos}" var="sex"
+							itemValue="#{sex}" itemLabel="#{enum[sex]}" />
+					</p:selectOneRadio>
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.label.data.nascimento']}"
+						for="dataNascimento" />
+					<p:inputMask id="dataNascimento"
+						value="#{usuarioSessionController.pessoaFisica.dataNascimento}"
+						mask="99/99/9999"
+						label="#{bundle['pessoa.fisica.label.data.nascimento']}" size="10"
+						maxlength="12">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+					</p:inputMask>
+
+					<h:outputLabel value="#{bundle['pessoa.label.email']}" for="email" />
+					<p:inputText id="email" type="email" size="40"
+						value="#{usuarioSessionController.pessoaFisica.email}"
+						maxlength="250" label="#{bundle['pessoa.label.email']}" />
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.label.naturalidade']}"
+						for="naturalidade" />
+					<p:autoComplete
+						value="#{pessoaFisicaController.entity.naturalidade}"
+						id="naturalidade"
+						completeMethod="#{pessoaFisicaController.findLocalidade}"
+						var="nat" itemLabel="#{nat.nome} - #{nat.siglaUf}"
+						itemValue="#{nat}" converter="#{entityConverter}"
+						forceSelection="true" minQueryLength="3" maxResults="8" size="40"
+						label="#{bundle['pessoa.fisica.label.naturalidade']}">
+						<p:column>
+							#{nat.nome} - #{nat.siglaUf}
+						</p:column>
+					</p:autoComplete>
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Dados Complementares" id="pnlDadosComplementares">
+				<h:panelGrid columns="2" columnClasses="column" cellpadding="4">
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.nome.mae']}"
+						for="nomeMae" />
+					<p:inputText
+						value="#{usuarioSessionController.pessoaFisica.nomeMae}"
+						id="nomeMae" size="40" maxlength="250" />
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.nome.pai']}"
+						for="nomeMae" />
+					<p:inputText
+						value="#{usuarioSessionController.pessoaFisica.nomePai}"
+						id="nomePai" size="40" maxlength="250" />
+				</h:panelGrid>
+				<h:panelGrid columns="4" columnClasses="column" cellpadding="4">
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.rg']}" for="rg" />
+					<p:inputText value="#{usuarioSessionController.pessoaFisica.rg}"
+						id="rg" size="10" maxlength="12" />
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.label.orgao.expeditor']}"
+						for="orgaoExpeditor" />
+
+					<p:selectOneMenu
+						value="#{usuarioSessionController.pessoaFisica.orgaoExpeditor}"
+						id="orgaoExpeditor"
+						label="#{bundle['pessoa.fisica.label.orgao.expeditor']}">
+						<f:selectItem itemLabel="[Selecione]" />
+						<f:selectItems value="#{orgaosExpeditores}" var="orgao"
+							itemValue="#{_orgao}" itemLabel="#{_orgao}"
+							noSelectionValue="[Selecione]" />
+						<p:column>  
+                			#{_orgao}, #{_orgao.label}
+            			</p:column>
+
+					</p:selectOneMenu>
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.label.orgao.uf.expeditor']}"
+						for="ufExpeditor" />
+
+					<p:selectOneMenu
+						value="#{usuarioSessionController.pessoaFisica.ufExpeditor}"
+						id="ufExpeditor"
+						label="#{bundle['pessoa.fisica.label.orgao.uf.expeditor']}">
+						<f:selectItem itemLabel="[Selecione]" />
+						<f:selectItems value="#{ufs}" var="_uf" itemValue="#{_uf}"
+							itemLabel="#{_uf}" noSelectionValue="[Selecione]" />
+						<p:column>  
+                		#{_uf.label}
+            			</p:column>
+
+					</p:selectOneMenu>
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.label.data.expedicao']}"
+						for="dataExpedicao" />
+					<p:inputMask id="dataExpedicao"
+						value="#{usuarioSessionController.pessoaFisica.dataExpedicao}"
+						mask="99/99/9999"
+						label="#{bundle['pessoa.fisica.label.data.expedicao']}" size="10"
+						maxlength="12" validator="pastDateValidator">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+					</p:inputMask>
+
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="#{bundle['pessoa.fisica.panel.telefones']}"
+				id="pnlTelefones">
+
+				<h:panelGrid columns="2" columnClasses="column" cellpadding="4">
+
+					<h:outputLabel value="#{bundle['pessoa.fisica.label.tel.celular']}"
+						for="celular" />
+					<p:inputMask id="celular"
+						value="#{usuarioSessionController.celular}" mask="(99) 9999-9999"
+						size="14" label="#{bundle['pessoa.fisica.label.tel.celular']}"
+						converter="#{telefoneConverter}" />
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.label.tel.residencial']}"
+						for="residencial" />
+					<p:inputMask id="residencial"
+						value="#{usuarioSessionController.telefoneResidencial}"
+						mask="(99) 9999-9999" size="14"
+						label="#{bundle['pessoa.fisica.label.tel.residencial']}"
+						converter="#{telefoneConverter}" />
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.label.tel.comercial']}"
+						for="residencial" />
+					<p:inputMask id="comercial"
+						value="#{usuarioSessionController.telefoneComercial}"
+						mask="(99) 9999-9999" size="14"
+						label="#{bundle['pessoa.fisica.label.tel.comercial']}"
+						converter="#{telefoneConverter}" />
+				</h:panelGrid>
+			</p:panel>
+			<p:panel
+				header="#{bundle['pessoa.fisica.panel.endereco.residencial']}"
+				id="pnlEndereçoResidencial">
+				<s:span id="buscaCep">
+					<a id="linkBuscaCEPCorreios"
+						href="javascript:abreJanela('http://www.buscacep.correios.com.br/servicos/dnec/menuAction.do?Metodo=menuEndereco');">
+						Busca Cep </a>
+				</s:span>
+				<h:panelGrid columnClasses="column" columns="2" border="0"
+					cellpadding="4">
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.endereco.label.cep']}" for="cep" />
+					<p:inputMask id="cep"
+						value="#{usuarioSessionController.enderecoResidencial.cep}"
+						mask="99999-999" size="9" converter="cepConverter">
+					</p:inputMask>
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.endereco.label.logradouro']}"
+						for="logradouro" escape="false" />
+					<h:panelGroup layout="block">
+						<p:inputText id="logradouro"
+							value="#{usuarioSessionController.enderecoResidencial.logradouro}"
+							maxlength="250" size="40" required="#{not empty cep}" />
+						<h:outputLabel
+							value="#{bundle['pessoa.fisica.endereco.label.numero']}"
+							for="numero" />
+						<p:inputText id="numero"
+							value="#{usuarioSessionController.enderecoResidencial.numero}"
+							maxlength="6" size="6"
+							label="#{bundle['pessoa.fisica.endereco.label.numero']}" />
+					</h:panelGroup>
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.endereco.label.complemento']}"
+						for="complemento" />
+					<p:inputText id="complemento"
+						value="#{usuarioSessionController.enderecoResidencial.complemento}"
+						maxlength="100" size="40" />
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.endereco.label.bairro']}"
+						for="bairro" />
+					<p:inputText id="bairro"
+						value="#{usuarioSessionController.enderecoResidencial.bairro}"
+						maxlength="150" size="40" />
+
+					<h:outputLabel
+						value="#{bundle['pessoa.fisica.endereco.label.localidade']}"
+						for="localidade" escape="false" />
+					<p:autoComplete
+						value="#{usuarioSessionController.enderecoResidencial.localidade}"
+						id="localidade"
+						completeMethod="#{pessoaFisicaController.findLocalidade}"
+						var="loc" itemLabel="#{loc.nome} - #{loc.siglaUf}"
+						itemValue="#{loc}" converter="#{entityConverter}"
+						forceSelection="true" minQueryLength="3" size="40" maxResults="8">
+						<p:column>
+							#{loc.nome} - #{loc.siglaUf}
+						</p:column>
+					</p:autoComplete>
+				</h:panelGrid>
+				<h:outputLabel
+					value="#{msg['pessoa.fisica.endereco.info.logradouro.obrigatorio']}" />
+			</p:panel>
+
+			<p:panel header="#{bundle['usuario.panel.configuracao.sistema']}">
+				<h:panelGrid columnClasses="column" columns="2">
+					<h:outputLabel value="#{bundle['usuario.label.tema']}" for="tema"
+						escape="false" />
+
+					<p:themeSwitcher value="#{usuarioSessionController.theme}"
+						effect="fade" id="tema">
+						<f:selectItems value="#{primeFacesThemes.themes}" var="theme" />
+					</p:themeSwitcher>
+
+					<h:outputLabel value="#{bundle['usuario.label.idioma']}"
+						for="idioma" escape="false" />
+					<p:selectOneMenu value="#{usuarioSessionController.usuario.locale}"
+						style="width:160px" id="idioma">
+						<f:selectItems value="#{enumFactory.idiomasSistema}" var="_idioma"
+							itemValue="#{_idioma}" itemLabel="#{enum[_idioma]}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</p:panel>
+
+
+			<center>
+				<h:panelGroup layout="block">
+					<p:commandButton action="#{usuarioSessionController.salvar}"
+						value="#{bundle['button.salvar']}" id="cbtnSalvar" type="submit"
+						onclick="refresh.show();" update="frmPreferencias">
+					</p:commandButton>
+					<p:commandButton action="#{usuarioSessionController.cancelar}"
+						value="#{bundle['button.cancelar']}" id="cbtnCancelar"
+						immediate="true">
+					</p:commandButton>
+				</h:panelGroup>
+			</center>
+
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

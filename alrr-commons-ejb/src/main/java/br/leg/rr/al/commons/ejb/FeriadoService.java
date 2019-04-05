@@ -19,20 +19,19 @@ import org.apache.commons.lang3.StringUtils;
 import br.leg.rr.al.commons.domain.FeriadoType;
 import br.leg.rr.al.commons.jpa.Feriado;
 import br.leg.rr.al.commons.jpa.Feriado_;
-import br.leg.rr.al.core.dao.DominioJPADaoStatus;
+import br.leg.rr.al.core.dao.BaseDominioJPADao;
 import br.leg.rr.al.core.domain.Mes;
 import br.leg.rr.al.core.domain.StatusType;
-import br.leg.rr.al.core.helper.DataUtils;
+import br.leg.rr.al.core.utils.DataUtils;
 
-/**
- * @author <a href="mailto:ednil.libanio@gmail.com"> Ednil Libanio da Costa
- *         Junior</a><br/>
- *         Data Criação: 22-08-2018<br/>
- * @since 1.0.0
- */
 @Named
 @Stateless
-public class FeriadoService extends DominioJPADaoStatus<Feriado> implements FeriadoLocal {
+public class FeriadoService extends BaseDominioJPADao<Feriado> implements FeriadoLocal {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7863138912406290894L;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -101,44 +100,6 @@ public class FeriadoService extends DominioJPADaoStatus<Feriado> implements Feri
 
 		return null;
 
-	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -426295874384756347L;
-
-	@Override
-	public List<Feriado> pesquisar(Feriado feriado, List<FeriadoType> tipos, List<Mes> meses) {
-		final CriteriaBuilder builder = getCriteriaBuilder();
-		CriteriaQuery<Feriado> cq = builder.createQuery(Feriado.class);
-		final Root<Feriado> feriadoRoot = cq.from(Feriado.class);
-		cq.select(feriadoRoot);
-
-		List<Predicate> predicateList = new ArrayList<Predicate>();
-
-		Predicate predMes, nome, predTipo;
-
-		if (!StringUtils.isBlank(feriado.getNome())) {
-			nome = builder.like(builder.upper(feriadoRoot.get(Feriado_.nome)),
-					"%" + feriado.getNome().toUpperCase() + "%");
-			predicateList.add(nome);
-		}
-
-		if (meses != null && (meses.size() > 0)) {
-			predMes = feriadoRoot.get(Feriado_.mes).in(Arrays.asList(meses));
-			predicateList.add(predMes);
-		}
-
-		if (tipos != null && (tipos.size() > 0)) {
-			predTipo = feriadoRoot.get(Feriado_.tipo).in(Arrays.asList(tipos));
-			predicateList.add(predTipo);
-		}
-
-		if (predicateList.size() > 0) {
-			cq.where(predicateList.toArray(new Predicate[predicateList.size()]));
-		}
-		return getEntityManager().createQuery(cq).getResultList();
 	}
 
 	@Override

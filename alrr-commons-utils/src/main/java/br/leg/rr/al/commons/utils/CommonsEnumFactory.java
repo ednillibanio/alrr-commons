@@ -4,6 +4,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import br.leg.rr.al.commons.domain.FeriadoType;
+import br.leg.rr.al.commons.domain.TelefoneType;
 import br.leg.rr.al.core.domain.DiaSemana;
 import br.leg.rr.al.core.domain.EmailType;
 import br.leg.rr.al.core.domain.Mes;
@@ -45,5 +46,9 @@ public class CommonsEnumFactory {
 
 	public SistemaLocale[] getIdiomas() {
 		return SistemaLocale.values();
+	}
+	
+	public TelefoneType[] getTelefoneType() {
+		return TelefoneType.values();
 	}
 }
