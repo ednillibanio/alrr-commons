@@ -1,5 +1,7 @@
 package br.leg.rr.al.commons.jpa;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -46,6 +48,12 @@ public class PartidoPolitico extends DominioIndexado {
 
 	public void setLogo(byte[] logo) {
 		this.logo = logo;
+	}
+
+	@Override
+	public Serializable getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

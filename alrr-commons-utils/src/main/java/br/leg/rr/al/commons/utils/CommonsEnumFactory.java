@@ -1,23 +1,18 @@
 package br.leg.rr.al.commons.utils;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-
-import br.leg.rr.al.commons.domain.FeriadoType;
-import br.leg.rr.al.commons.domain.TelefoneType;
-import br.leg.rr.al.core.domain.DiaSemana;
-import br.leg.rr.al.core.domain.EmailType;
-import br.leg.rr.al.core.domain.Mes;
-import br.leg.rr.al.core.domain.SistemaLocale;
-import br.leg.rr.al.core.domain.StatusType;
-import br.leg.rr.al.core.domain.TurnoType;
+import br.leg.rr.al.commons.utils.enums.DiaSemana;
+import br.leg.rr.al.commons.utils.enums.EmailType;
+import br.leg.rr.al.commons.utils.enums.FeriadoType;
+import br.leg.rr.al.commons.utils.enums.Mes;
+import br.leg.rr.al.commons.utils.enums.TelefoneType;
+import br.leg.rr.al.commons.utils.enums.TurnoType;
 
 /**
- * @author Ednil Libanio da Costa Junior
- * @date 19-04-2012
+ * 
+ * @author <a href="mailto:ednil.libanio@gmail.com">Ednil Libanio da Costa
+ *         Junior</a>
+ *
  */
-@Named
-@RequestScoped
 public class CommonsEnumFactory {
 
 	public FeriadoType[] getTiposFeriados() {
@@ -40,14 +35,6 @@ public class CommonsEnumFactory {
 		return TurnoType.values();
 	}
 
-	public StatusType[] getStatusType() {
-		return StatusType.values();
-	}
-
-	public SistemaLocale[] getIdiomas() {
-		return SistemaLocale.values();
-	}
-	
 	public TelefoneType[] getTelefoneType() {
 		return TelefoneType.values();
 	}

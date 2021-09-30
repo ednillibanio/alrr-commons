@@ -1,6 +1,6 @@
 /*******************************************************************************
  * ALE-RR Licença
- * Copyright (C) 2018, ALE-RR
+ * Copyright (C) 2021, ALE-RR
  * Boa Vista, RR - Brasil
  * Todos os direitos reservados.
  * 

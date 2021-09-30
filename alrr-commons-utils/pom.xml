@@ -2,40 +2,49 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<artifactId>alrr-commons-utils</artifactId>
 	<name>alrr-commons-utils</name>
+	<version>0.0.1-SNAPSHOT</version>
+
 	<parent>
-		<artifactId>alrr-commons</artifactId>
 		<groupId>br.leg.rr.al.commons</groupId>
-		<version>1.0.0-SNAPSHOT</version>
+		<artifactId>alrr-commons</artifactId>
+		<version>0.0.3-SNAPSHOT</version>
 	</parent>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>**/kmdr/*</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
+	<organization>
+		<name>Assembleia Legislativa do Estado de Roraima</name>
+		<url>http://al.rr.leg.br/</url>
+	</organization>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/govrr/alrr-packages</url>
+		</repository>
+	</distributionManagement>
+
+	<developers>
+		<developer>
+			<id>ednillibanio</id>
+			<name>Ednil Libanio da Costa Junior</name>
+			<url>https://github.com/ednillibanio</url>
+			<email>ednil.libanio@gmail.com</email>
+			<organization>Assembleia Legislativa do Estado de Roraima</organization>
+			<organizationUrl>http://al.rr.leg.br/</organizationUrl>
+			<roles>
+				<role>Analista de Sistemas</role>
+				<role>Desenvolvedor Java</role>
+			</roles>
+		</developer>
+	</developers>
+
 	<dependencies>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>br.leg.rr.al.core</groupId>
 			<artifactId>alrr-core-utils</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.persistence</groupId>

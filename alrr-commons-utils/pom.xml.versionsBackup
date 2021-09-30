@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>alrr-commons-utils</artifactId>
+	<name>alrr-commons-utils</name>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<parent>
+		<groupId>br.leg.rr.al.commons</groupId>
+		<artifactId>alrr-commons</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+	</parent>
+
+	<organization>
+		<name>Assembleia Legislativa do Estado de Roraima</name>
+		<url>http://al.rr.leg.br/</url>
+	</organization>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/govrr/alrr-packages</url>
+		</repository>
+	</distributionManagement>
+
+	<developers>
+		<developer>
+			<id>ednillibanio</id>
+			<name>Ednil Libanio da Costa Junior</name>
+			<url>https://github.com/ednillibanio</url>
+			<email>ednil.libanio@gmail.com</email>
+			<organization>Assembleia Legislativa do Estado de Roraima</organization>
+			<organizationUrl>http://al.rr.leg.br/</organizationUrl>
+			<roles>
+				<role>Analista de Sistemas</role>
+				<role>Desenvolvedor Java</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.leg.rr.al.core</groupId>
+			<artifactId>alrr-core-utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

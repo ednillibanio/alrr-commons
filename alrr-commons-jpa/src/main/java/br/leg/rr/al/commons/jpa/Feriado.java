@@ -1,5 +1,7 @@
 package br.leg.rr.al.commons.jpa;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -10,15 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.leg.rr.al.commons.domain.FeriadoType;
-import br.leg.rr.al.commons.domain.FeriadoTypeConverter;
 import br.leg.rr.al.commons.jpa.feriado.validators.ValidFeriado;
 import br.leg.rr.al.commons.jpa.validators.ValidDia;
-import br.leg.rr.al.core.domain.Mes;
-import br.leg.rr.al.core.domain.MesConverter;
+import br.leg.rr.al.commons.utils.enums.FeriadoType;
+import br.leg.rr.al.commons.utils.enums.FeriadoTypeConverter;
+import br.leg.rr.al.commons.utils.enums.Mes;
+import br.leg.rr.al.commons.utils.enums.MesConverter;
 import br.leg.rr.al.core.jpa.Dominio;
-import br.leg.rr.al.localidade.jpa.Municipio;
-import br.leg.rr.al.localidade.jpa.UnidadeFederativa;
 
 /**
  * Classe persistente que representa a tabela "feriado".
@@ -171,6 +171,12 @@ public class Feriado extends Dominio {
 	 */
 	public void setUf(UnidadeFederativa uf) {
 		this.uf = uf;
+	}
+
+	@Override
+	public Serializable getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

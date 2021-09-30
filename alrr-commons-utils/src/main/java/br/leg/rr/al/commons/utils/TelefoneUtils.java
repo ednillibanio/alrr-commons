@@ -1,23 +1,16 @@
-/*******************************************************************************
- * ALE-RR Licença
- * Copyright (C) 2018, ALE-RR
- * Boa Vista, RR - Brasil
- * Todos os direitos reservados.
- * 
- * Este programa é propriedade da Assembleia Legislativa do Estado de Roraima e 
- * não é permitida a distribuição, alteração ou cópia da mesma sem prévia autoriazação.
- ******************************************************************************/
 package br.leg.rr.al.commons.utils;
 
 import java.io.Serializable;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.leg.rr.al.commons.domain.TelefoneType;
+import br.leg.rr.al.commons.utils.enums.TelefoneType;
 
 /**
- * @author Ednil Libanio da Costa Junior
- * @date 05-04-2017
+ * 
+ * @author <a href="mailto:ednil.libanio@gmail.com">Ednil Libanio da Costa
+ *         Junior</a>
+ *
  */
 public final class TelefoneUtils implements Serializable {
 
@@ -39,8 +32,7 @@ public final class TelefoneUtils implements Serializable {
 	/**
 	 * Remove a formatação do número do telefone: parenteses '()' e hífen '-'.
 	 * 
-	 * @param tel
-	 *            telefone com a formatação.
+	 * @param tel telefone com a formatação.
 	 * @return telefone sem formatação.
 	 */
 	public static String unformat(String tel) {
@@ -55,11 +47,10 @@ public final class TelefoneUtils implements Serializable {
 	 * 
 	 * Formata o número do telefone informado.
 	 * 
-	 * @param numero
-	 *            número do telefone a ser formatado.
-	 * @param tipo
-	 *            Tipo do telefone. Importante para definir qual o tamanho do campo.
-	 *            Por exemplo, celular pode ter 11 dígitos se contar com ddd.
+	 * @param numero número do telefone a ser formatado.
+	 * @param tipo   Tipo do telefone. Importante para definir qual o tamanho do
+	 *               campo. Por exemplo, celular pode ter 11 dígitos se contar com
+	 *               ddd.
 	 * @return telefone formatado de acordo com o TelefoneType. Ex. Celular com 11
 	 *         digitos: '(##) ####-######'.
 	 */
@@ -75,11 +66,10 @@ public final class TelefoneUtils implements Serializable {
 	/**
 	 * Formata o número do telefone informado.
 	 * 
-	 * @param numero
-	 *            número do telefone a ser formatado.
-	 * @param tipo
-	 *            Tipo do telefone. Importante para definir qual o tamanho do campo.
-	 *            Por exemplo, celular pode ter 11 dígitos se contar com ddd.
+	 * @param numero número do telefone a ser formatado.
+	 * @param tipo   Tipo do telefone. Importante para definir qual o tamanho do
+	 *               campo. Por exemplo, celular pode ter 11 dígitos se contar com
+	 *               ddd.
 	 * @return telefone formatado de acordo com o TelefoneType. Ex. Celular com 11
 	 *         digitos: '(##) ####-######'. Caso o a quantidade de dígitos do número
 	 *         do telefone não esteja entre 9 e 11, o método retorna o número sem
@@ -118,8 +108,7 @@ public final class TelefoneUtils implements Serializable {
 	/**
 	 * Obtém o ddd do número do telefone informado.
 	 * 
-	 * @param numero
-	 *            número do telefone que contém o ddd.
+	 * @param numero número do telefone que contém o ddd.
 	 * @return ddd. Caso o número do telefone informado no argumento seja menor que
 	 *         10 dígitos, o método retorna <code>null</code>.
 	 */
@@ -136,8 +125,7 @@ public final class TelefoneUtils implements Serializable {
 	/**
 	 * Obtém o número do telefone sem o ddd.
 	 * 
-	 * @param numero
-	 *            número do telefone com o ddd.
+	 * @param numero número do telefone com o ddd.
 	 * @return número sem ddd. Caso a quantidade de dígitos no param
 	 *         <code>numero</code> seja menor ou igual a 9, retornará o valor do
 	 *         param informado.
@@ -162,8 +150,7 @@ public final class TelefoneUtils implements Serializable {
 	/**
 	 * Valida o número do telefone informado.
 	 * 
-	 * @param numero
-	 *            número do telefone que será validado.
+	 * @param numero número do telefone que será validado.
 	 * @return <code>true</code> se caso:
 	 *         <ul>
 	 *         <li>número do telefone for validado com sucesso;</li>
